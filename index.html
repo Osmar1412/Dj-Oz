@@ -47,15 +47,16 @@
     <!-- FORMULÁRIO -->
     <form 
         action="https://formsubmit.co/osmar.dj.oz@gmail.com" 
-        method="POST"
-        onsubmit="mostrarMensagem(event)"
+        method="POST" 
+        target="hidden_iframe"
+        onsubmit="mostrarMensagem();"
     >
         <!-- CONFIGURAÇÕES DO FORMSUBMIT -->
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_subject" value="Novo orçamento DJ Oz">
         <input type="hidden" name="_template" value="table">
 
-        <!-- RESPOSTA AUTOMÁTICA (para o cliente) -->
+        <!-- RESPOSTA AUTOMÁTICA PARA O CLIENTE -->
         <input type="hidden" name="_autoresponse" value="Olá! Recebemos seu pedido de orçamento. Obrigado pelo contato com a DJ Oz. Em breve retornaremos com todas as informações ou entraremos em contato pelo WhatsApp informado. Atenciosamente, DJ Oz 🔥">
 
         <!-- CAMPOS DO FORMULÁRIO -->
@@ -67,32 +68,26 @@
         <button type="submit">Enviar</button>
     </form>
 
+    <!-- IFRAME OCULTO PARA ENVIO -->
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
     <!-- MENSAGEM DE STATUS -->
     <p id="statusEnvio"></p>
 </section>
 
 <script>
-function mostrarMensagem(event) {
-    event.preventDefault(); // evita recarregamento da página
-    const form = event.target;
+function mostrarMensagem() {
+    const status = document.getElementById('statusEnvio');
+    status.textContent = "Obrigado! Seu pedido de orçamento foi enviado com sucesso 🎧";
 
-    fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-    })
-    .then(response => {
-        if (response.ok) {
-            document.getElementById('statusEnvio').textContent = "Obrigado! Seu pedido de orçamento foi enviado com sucesso 🎧";
-            form.reset(); // limpa os campos
-        } else {
-            document.getElementById('statusEnvio').textContent = "Ops! Ocorreu um erro. Tente novamente.";
-        }
-    })
-    .catch(() => {
-        document.getElementById('statusEnvio').textContent = "Ops! Ocorreu um erro. Tente novamente.";
-    });
+    // limpa a mensagem depois de 5 segundos
+    setTimeout(() => {
+        status.textContent = "";
+    }, 5000);
+
+    // opcional: limpa o formulário
+    document.querySelector('#contato form').reset();
 }
-    
 </script>
     
 <a href="https://wa.me/5511947865370" class="whatsapp">💬</a>
