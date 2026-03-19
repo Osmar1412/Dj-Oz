@@ -72,31 +72,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ============================
-    // CONTADOR (NÃO CONTA F5)
-    // ============================
-    const contador = document.getElementById("contador");
+// CONTADOR REAL (SEM CONTAR F5)
+// ============================
+const contador = document.getElementById("contador");
 
-    if (contador) {
-        if (!localStorage.getItem("visitou")) {
+if (contador) {
 
-            fetch('https://api.countapi.xyz/hit/djoz-unico/visitas')
-            .then(res => res.json())
-            .then(res => {
-                contador.innerText = "👁️ Visitas: " + res.value;
-            });
+    // Se NUNCA visitou
+    if (!localStorage.getItem("visitou")) {
 
-            localStorage.setItem("visitou", "true");
+        fetch('https://api.countapi.xyz/hit/djoz-unico/visitas')
+        .then(res => res.json())
+        .then(res => {
+            contador.innerText = "👁️ Visitas: " + res.value;
+        });
 
-        } else {
+        // Marca como visitante
+        localStorage.setItem("visitou", "true");
 
-            fetch('https://api.countapi.xyz/get/djoz-unico/visitas')
-            .then(res => res.json())
-            .then(res => {
-                contador.innerText = "👁️ Visitas: " + res.value;
-            });
-        }
+    } else {
+
+        // Só consulta (não soma)
+        fetch('https://api.countapi.xyz/get/djoz-unico/visitas')
+        .then(res => res.json())
+        .then(res => {
+            contador.innerText = "👁️ Visitas: " + res.value;
+        });
     }
 
+}
 
     // ============================
     // FORMULÁRIO (SEM CONFLITO)
