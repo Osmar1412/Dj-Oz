@@ -6,13 +6,27 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     // ============================
-    // CONFIG (LOGO + TEXTO)
+    // LOGO E DESCRIÇÃO
     // ============================
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
         document.getElementById('logo').src = data.logo;
         document.getElementById('descricao').innerText = data.descricao;
+    });
+
+    // ============================
+    // CONTADOR PROFISSIONAL (API)
+    // ============================
+    fetch('https://api.countapi.xyz/hit/djoz-site/visitas')
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("contador").innerText =
+            "👁️ Visitas: " + data.value;
+    })
+    .catch(() => {
+        document.getElementById("contador").innerText =
+            "👁️ Visitas indisponíveis";
     });
 
 
@@ -25,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const container = document.getElementById('eventos');
 
         data.eventos.forEach(ev => {
-
             let bloco = document.createElement('div');
             bloco.classList.add("evento");
 
@@ -44,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
             container.appendChild(bloco);
         });
     });
-
 
     // ============================
     // SETS
@@ -65,23 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-
     // ============================
-    // CONTADOR
-    // ============================
-    let visitas = localStorage.getItem("visitasTotal") || 0;
-
-    if (!sessionStorage.getItem("visitouSessao")) {
-        visitas++;
-        localStorage.setItem("visitasTotal", visitas);
-        sessionStorage.setItem("visitouSessao", "true");
-    }
-
-    document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
-
-
-    // ============================
-    // FORMULÁRIO (EMAIL)
+    // FORMULÁRIO (EMAILJS)
     // ============================
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
@@ -98,21 +95,14 @@ document.addEventListener("DOMContentLoaded", function () {
             message: form.message.value
         };
 
-        // ENVIA PARA VOCÊ
         emailjs.send("service_5fpydfh", "template_esjbqjl", formData)
-
-        // ENVIA PARA CLIENTE
         .then(() => {
             return emailjs.send("service_5fpydfh", "template_2qmhd1v", formData);
         })
-
-        // SUCESSO
         .then(() => {
             status.innerText = "✅ Pedido enviado com sucesso!";
             form.reset();
         })
-
-        // ERRO
         .catch((error) => {
             status.innerText = "❌ Erro ao enviar.";
             console.log(error);
@@ -121,11 +111,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
 // ============================
 // TOGGLE EVENTOS
 // ============================
 function toggle(el) {
     const content = el.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
+    content.style.display =
+        content.style.display === "block" ? "none" : "block";
 }
