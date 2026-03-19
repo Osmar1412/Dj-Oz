@@ -1,9 +1,21 @@
 // CONFIG (LOGO + TEXTOS)
+
 fetch('config.json')
 .then(res => res.json())
 .then(data => {
-    document.getElementById('logo').src = data.logo;
+    const logo = document.getElementById('logo');
+
+    logo.src = data.logo;
+    logo.style.width = data.logoWidth;
+
     document.getElementById('descricao').innerText = data.descricao;
+});
+
+//fetch('config.json')
+//.then(res => res.json())
+//.then(data => {
+    //document.getElementById('logo').src = data.logo;
+    //document.getElementById('descricao').innerText = data.descricao;
 });
 
 // EVENTOS
