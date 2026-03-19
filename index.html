@@ -46,6 +46,7 @@
 
     <!-- FORMULÁRIO -->
     <form 
+        id="formDJ"
         action="https://formsubmit.co/osmar.dj.oz@gmail.com" 
         method="POST" 
         target="hidden_iframe"
@@ -65,28 +66,35 @@
         <input type="tel" name="whatsapp" placeholder="Seu WhatsApp (com DDD)" required>
         <textarea name="message" placeholder="Detalhes do evento" required></textarea>
 
-        <button type="submit">Enviar</button>
+        <button type="submit" id="btnEnviar">Enviar</button>
     </form>
 
     <!-- IFRAME OCULTO PARA ENVIO -->
     <iframe name="hidden_iframe" style="display:none;"></iframe>
 
     <!-- MENSAGEM DE STATUS -->
-    <p id="statusEnvio"></p>
+    <p id="statusEnvio" style="margin-top:10px;color:green;"></p>
 </section>
 
 <script>
 function mostrarMensagem() {
     const status = document.getElementById('statusEnvio');
+    const btn = document.getElementById('btnEnviar');
+    
+    // Mostra a mensagem
     status.textContent = "Obrigado! Seu pedido de orçamento foi enviado com sucesso 🎧";
+    
+    // Desabilita o botão para evitar múltiplos envios
+    btn.disabled = true;
 
-    // limpa a mensagem depois de 5 segundos
+    // Limpa o formulário
+    document.getElementById('formDJ').reset();
+
+    // Reativa o botão depois de 5 segundos
     setTimeout(() => {
         status.textContent = "";
+        btn.disabled = false;
     }, 5000);
-
-    // opcional: limpa o formulário
-    document.querySelector('#contato form').reset();
 }
 </script>
     
