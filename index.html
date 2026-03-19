@@ -48,8 +48,11 @@
         <input type="hidden" name="_subject" value="Novo orçamento DJ Oz">
         <input type="hidden" name="_template" value="table">
 
-        <!-- resposta automática -->
-        <input type="hidden" name="_autoresponse" value="Olá! Recebemos seu pedido de orçamento 🎧. Obrigado pelo contato! Em breve retornaremos com mais informações ou entraremos em contato pelo WhatsApp informado. DJ Oz 🔥">
+        <!-- REDIRECIONAMENTO INVISÍVEL -->
+        <input type="hidden" name="_next" value="https://example.com/obrigado.html">
+
+        <!-- RESPOSTA AUTOMÁTICA -->
+        <input type="hidden" name="_autoresponse" value="Olá! Recebemos seu pedido de orçamento 🎧. Obrigado pelo contato! Em breve retornaremos ou entraremos em contato via WhatsApp. DJ Oz 🔥">
 
         <input type="text" name="name" placeholder="Seu nome" required>
         <input type="email" name="email" placeholder="Seu email" required>
@@ -66,8 +69,11 @@
 
 <a href="https://wa.me/5511947865370" class="whatsapp">💬</a>
 
-<footer>
-    <p>© 2026 DJ Oz</p>
+<footer class="footer">
+    <p><strong>DJ Oz Eventos</strong></p>
+    <p>📱 WhatsApp: (11) 94786-5370</p>
+    <p>📧 Email: osmar.dj.oz@gmail.com</p>
+    <p>© 2026 Todos os direitos reservados</p>
 </footer>
 
 <script src="script.js"></script>
