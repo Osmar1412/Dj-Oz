@@ -12,66 +12,48 @@
 <body>
 
 <header class="hero">
-    <h1 class="logo">DJ OZ</h1>
+    <img src="logo.png" class="logo-img">
     <p>Experiência sonora para eventos inesquecíveis 🎧🔥</p>
-    <a href="https://wa.me/5511947685370" class="btn">Contratar Agora</a>
+
+    <a href="https://wa.me/5511947685370" class="btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="icon">
+        WhatsApp
+    </a>
 </header>
 
 <nav>
     <a href="#sobre">Sobre</a>
-    <a href="#musicas">Sets</a>
+    <a href="#sets">Sets</a>
     <a href="#eventos">Eventos</a>
-    <a href="#videos">Vídeos</a>
     <a href="#contato">Contato</a>
 </nav>
 
 <section id="sobre">
     <h2>Sobre</h2>
-    <p>
-        DJ profissional especializado em casamentos, festas e eventos corporativos.
-        Mixagens modernas, pista animada e experiência inesquecível.
-    </p>
+    <p>DJ profissional especializado em casamentos, festas e eventos corporativos.</p>
 </section>
 
-<section id="musicas">
+<section id="sets">
     <h2>Sets & Mixagens</h2>
-
-    <iframe src="https://w.soundcloud.com/player/?url=https://soundcloud.com/forss/flickermood" 
-    width="80%" height="120"></iframe>
-
 </section>
 
 <section id="eventos">
     <h2>Eventos</h2>
-    <div class="galeria">
-        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30">
-        <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063">
-    </div>
-</section>
-
-<section id="videos">
-    <h2>Vídeos</h2>
-
-    <div class="video">
-        <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
-    </div>
-
 </section>
 
 <section id="contato" class="contato">
-    <h2>Contrate o DJ</h2>
+    <h2>Contratar DJ</h2>
 
     <form action="https://formsubmit.co/osmar.dj.oz@gmail.com" method="POST">
         <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="Contato DJ Oz">
+        <input type="hidden" name="_subject" value="Novo Contato DJ Oz">
 
         <input type="text" name="name" placeholder="Seu nome" required>
         <input type="email" name="email" placeholder="Seu email" required>
         <textarea name="message" placeholder="Detalhes do evento" required></textarea>
 
-        <button type="submit">Enviar Pedido</button>
+        <button type="submit">Enviar</button>
     </form>
-
 </section>
 
 <a href="https://wa.me/5511947685370" class="whatsapp">💬</a>
@@ -79,6 +61,8 @@
 <footer>
     <p>© 2026 DJ Oz</p>
 </footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>
