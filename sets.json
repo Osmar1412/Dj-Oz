@@ -1,14 +1,19 @@
 {
   "sets": [
     {
-      "titulo": "Teste 01",
+      "titulo": "Set 01",
       "data": "01/03/2026",
-      "audio": "audios/FH-A D A M FT AMY-ZOMBIE.mp3"
+      "audio": "audios/set1.mp3"
+    },
+    {
+      "titulo": "Set 02",
+      "data": "05/03/2026",
+      "audio": "audios/set2.mp3"
+    },
+    {
+      "titulo": "Set Casamento",
+      "data": "10/03/2026",
+      "audio": "audios/set3.mp3"
     }
   ]
-}
-{
-  "titulo": "Novo Set",
-  "data": "19/03/2026",
-  "audio": "audios/FH-ACE OF BASE-BEAUTIFUL LIFE.mp3"
 }
