@@ -1,3 +1,11 @@
+// CONFIG (LOGO + TEXTOS)
+fetch('config.json')
+.then(res => res.json())
+.then(data => {
+    document.getElementById('logo').src = data.logo;
+    document.getElementById('descricao').innerText = data.descricao;
+});
+
 // EVENTOS
 fetch('eventos.json')
 .then(res => res.json())
