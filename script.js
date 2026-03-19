@@ -1,4 +1,3 @@
-// GARANTE QUE O HTML CARREGOU
 document.addEventListener("DOMContentLoaded", function () {
 
     // ============================
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('eventos');
-
         if (!container) return;
 
         data.eventos.forEach(ev => {
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('sets');
-
         if (!container) return;
 
         data.sets.forEach(set => {
@@ -71,54 +68,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-// ============================
-// CONTADOR ESTÁVEL (SEM F5)
-// ============================
-const contador = document.getElementById("contador");
-
-if (contador) {
-
-    let visitas = localStorage.getItem("visitasTotal");
-
-    // Se não existir, inicia
-    if (!visitas) {
-        visitas = 1;
-        localStorage.setItem("visitasTotal", visitas);
-    }
-
-    // Só incrementa se for primeira visita da sessão
-    if (!sessionStorage.getItem("visitouSessao")) {
-        visitas = parseInt(visitas) + 1;
-        localStorage.setItem("visitasTotal", visitas);
-        sessionStorage.setItem("visitouSessao", "true");
-    }
-
-    contador.innerText = "👁️ Visitas: " + visitas;
-}
     // ============================
-    // FORMULÁRIO (SEM CONFLITO)
+    // CONTADOR (SEM F5)
     // ============================
-    const form = document.getElementById("formContato");
+    const contador = document.getElementById("contador");
 
-    if (form) {
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();
+    if (contador) {
 
-            const data = new FormData(form);
+        let visitas = localStorage.getItem("visitasTotal");
 
-            fetch("https://formsubmit.co/ajax/osmar.dj.oz@gmail.com", {
-                method: "POST",
-                body: data
-            })
-            .then(response => response.json())
-            .then(() => {
-                document.getElementById("statusEnvio").innerText = "✅ Mensagem enviada com sucesso!";
-                form.reset();
-            })
-            .catch(() => {
-                document.getElementById("statusEnvio").innerText = "❌ Erro ao enviar. Tente novamente.";
-            });
-        });
+        if (!visitas) {
+            visitas = 1;
+            localStorage.setItem("visitasTotal", visitas);
+        }
+
+        if (!sessionStorage.getItem("visitouSessao")) {
+            visitas = parseInt(visitas) + 1;
+            localStorage.setItem("visitasTotal", visitas);
+            sessionStorage.setItem("visitouSessao", "true");
+        }
+
+        contador.innerText = "👁️ Visitas: " + visitas;
     }
 
 });
@@ -130,4 +100,15 @@ if (contador) {
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display = content.style.display === "block" ? "none" : "block";
+}
+
+
+// ============================
+// MENSAGEM DE ENVIO (FORM)
+// ============================
+function mostrarMensagem() {
+    setTimeout(() => {
+        document.getElementById("statusEnvio").innerText = "✅ Mensagem enviada com sucesso!";
+        document.querySelector("form").reset();
+    }, 500);
 }
