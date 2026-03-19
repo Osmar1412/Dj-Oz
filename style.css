@@ -156,3 +156,9 @@ button {
     height: 28px;
     filter: invert(1); /* deixa o ícone branco */
 }
+
+.contador {
+    margin-top: 15px;
+    color: #00ffcc;
+    font-size: 14px;
+}
