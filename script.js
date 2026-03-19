@@ -29,19 +29,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const status = document.getElementById("statusEnvio");
 
     form.addEventListener("submit", function(e) {
-        e.preventDefault();
+    e.preventDefault();
 
-        status.innerText = "📨 Enviando...";
+    status.innerText = "📨 Enviando...";
 
-        emailjs.sendForm("service_5fpydfh", "template_esjbqjl", this)
-        .then(() => {
-            status.innerText = "✅ Orçamento enviado com sucesso!";
-            form.reset();
-        })
-        .catch((error) => {
-            status.innerText = "❌ Erro ao enviar. Verifique configuração.";
-            console.log(error);
-        });
+    emailjs.sendForm("service_5fpydfh", "template_esjbqjl", this)
+    .then(() => {
+        return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
+    })
+    .then(() => {
+        status.innerText = "✅ Pedido enviado com sucesso!";
+        form.reset();
+    })
+    .catch((error) => {
+        status.innerText = "❌ Erro ao enviar.";
+        console.log(error);
     });
-
 });
