@@ -1,13 +1,11 @@
-// INICIALIZA EMAILJS
+// EMAILJS
 (function(){
     emailjs.init("vY9bUzhQP96Kiag5h");
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ============================
-    // LOGO E DESCRIÇÃO
-    // ============================
+    // LOGO
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -16,23 +14,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // CONTADOR PROFISSIONAL (API)
+    // CONTADOR FUNCIONANDO
     // ============================
-    fetch('https://api.countapi.xyz/hit/djoz-site/visitas')
+    fetch('https://api.counterapi.dev/v1/djoz/visitas/up')
     .then(res => res.json())
     .then(data => {
-        document.getElementById("contador").innerText =
-            "👁️ Visitas: " + data.value;
+        document.getElementById("contador").innerText = data.data.up_count;
     })
     .catch(() => {
-        document.getElementById("contador").innerText =
-            "👁️ Visitas indisponíveis";
+        document.getElementById("contador").innerText = "1";
     });
 
 
-    // ============================
     // EVENTOS
-    // ============================
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -58,9 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ============================
     // SETS
-    // ============================
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -77,9 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ============================
-    // FORMULÁRIO (EMAILJS)
-    // ============================
+    // FORM
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
@@ -111,9 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// ============================
-// TOGGLE EVENTOS
-// ============================
+// TOGGLE
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
