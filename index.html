@@ -49,40 +49,41 @@
         action="https://formsubmit.co/osmar.dj.oz@gmail.com" 
         method="POST" 
         target="hidden_iframe"
-        onsubmit="mostrarMensagem()"
+        onsubmit="return mostrarMensagem();"
     >
+        <!-- CONFIGURAÇÕES DO FORMSUBMIT -->
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_subject" value="Novo orçamento DJ Oz">
         <input type="hidden" name="_template" value="table">
 
         <!-- RESPOSTA AUTOMÁTICA -->
-        <input type="hidden" name="_autoresponse" value="Olá! Recebemos seu pedido de orçamento 🎧
+        <input type="hidden" name="_autoresponse" value="Olá! Recebemos seu pedido de orçamento. Obrigado pelo contato com a DJ Oz. Em breve retornaremos com todas as informações ou entraremos em contato pelo WhatsApp informado. Atenciosamente, DJ Oz 🔥">
 
-Obrigado pelo contato com a DJ Oz.
-
-Em breve retornaremos com todas as informações ou entraremos em contato pelo WhatsApp informado.
-
-Atenciosamente,
-DJ Oz 🔥">
-
+        <!-- CAMPOS DO FORMULÁRIO -->
         <input type="text" name="name" placeholder="Seu nome" required>
-
         <input type="email" name="email" placeholder="Seu email" required>
-
-        <!-- NOVO CAMPO WHATSAPP -->
         <input type="tel" name="whatsapp" placeholder="Seu WhatsApp (com DDD)" required>
-
         <textarea name="message" placeholder="Detalhes do evento" required></textarea>
 
         <button type="submit">Enviar</button>
     </form>
 
-    <!-- IFRAME OCULTO -->
+    <!-- IFRAME OCULTO PARA ENVIO -->
     <iframe name="hidden_iframe" style="display:none;"></iframe>
 
-    <!-- MENSAGEM -->
+    <!-- MENSAGEM DE STATUS -->
     <p id="statusEnvio"></p>
 </section>
+
+<script>
+function mostrarMensagem() {
+    const status = document.getElementById('statusEnvio');
+    status.textContent = "Obrigado! Seu pedido de orçamento foi enviado com sucesso 🎧";
+    // limpa o formulário após envio
+    setTimeout(() => status.textContent = "", 5000);
+    return true; // garante que o formulário continue a enviar
+}
+</script>
 <a href="https://wa.me/5511947865370" class="whatsapp">💬</a>
 
 <footer>
