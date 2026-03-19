@@ -138,3 +138,21 @@ button {
     margin: 8px 0;
     font-size: 16px;
 }
+
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    padding: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.whatsapp img {
+    width: 28px;
+    height: 28px;
+    filter: invert(1); /* deixa o ícone branco */
+}
