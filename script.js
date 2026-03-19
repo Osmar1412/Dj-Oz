@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // CONFIG (logo e descrição)
+    // CONFIG
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // CONTADOR (não conta F5)
+    // CONTADOR
     let visitas = localStorage.getItem("visitasTotal") || 0;
 
     if (!sessionStorage.getItem("visitouSessao")) {
@@ -29,20 +29,37 @@ document.addEventListener("DOMContentLoaded", function () {
     const status = document.getElementById("statusEnvio");
 
     form.addEventListener("submit", function(e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    status.innerText = "📨 Enviando...";
+        status.innerText = "📨 Enviando...";
 
-    emailjs.sendForm("service_5fpydfh", "template_esjbqjl", this)
-    .then(() => {
-        return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
-    })
-    .then(() => {
-        status.innerText = "✅ Pedido enviado com sucesso!";
-        form.reset();
-    })
-    .catch((error) => {
-        status.innerText = "❌ Erro ao enviar.";
-        console.log(error);
+        // CAPTURA OS DADOS
+        const formData = {
+            name: form.name.value,
+            email: form.email.value,
+            whatsapp: form.whatsapp.value,
+            message: form.message.value
+        };
+
+        // ENVIA PARA VOCÊ
+        emailjs.send("service_5fpydfh", "template_esjbqjl", formData)
+
+        // ENVIA PARA CLIENTE
+        .then(() => {
+            return emailjs.send("service_5fpydfh", "template_2qmhd1v", formData);
+        })
+
+        // SUCESSO FINAL
+        .then(() => {
+            status.innerText = "✅ Pedido enviado com sucesso!";
+            form.reset();
+        })
+
+        // ERRO
+        .catch((error) => {
+            status.innerText = "❌ Erro ao enviar. Verifique o template.";
+            console.log(error);
+        });
     });
+
 });
