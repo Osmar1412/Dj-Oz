@@ -2,19 +2,8 @@
 fetch('config.json')
 .then(res => res.json())
 .then(data => {
-    const logo = document.getElementById('logo');
-
-    logo.src = data.logo;
-    logo.style.width = data.logoWidth;
-
+    document.getElementById('logo').src = data.logo;
     document.getElementById('descricao').innerText = data.descricao;
-});
-
-//fetch('config.json')
-//.then(res => res.json())
-//.then(data => {
-    //document.getElementById('logo').src = data.logo;
-    //document.getElementById('descricao').innerText = data.descricao;
 });
 
 // EVENTOS
