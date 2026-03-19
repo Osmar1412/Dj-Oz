@@ -72,36 +72,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // ============================
-// CONTADOR REAL (SEM CONTAR F5)
+// CONTADOR ESTÁVEL (SEM F5)
 // ============================
 const contador = document.getElementById("contador");
 
 if (contador) {
 
-    // Se NUNCA visitou
-    if (!localStorage.getItem("visitou")) {
+    let visitas = localStorage.getItem("visitasTotal");
 
-        fetch('https://api.countapi.xyz/hit/djoz-unico/visitas')
-        .then(res => res.json())
-        .then(res => {
-            contador.innerText = "👁️ Visitas: " + res.value;
-        });
-
-        // Marca como visitante
-        localStorage.setItem("visitou", "true");
-
-    } else {
-
-        // Só consulta (não soma)
-        fetch('https://api.countapi.xyz/get/djoz-unico/visitas')
-        .then(res => res.json())
-        .then(res => {
-            contador.innerText = "👁️ Visitas: " + res.value;
-        });
+    // Se não existir, inicia
+    if (!visitas) {
+        visitas = 1;
+        localStorage.setItem("visitasTotal", visitas);
     }
 
-}
+    // Só incrementa se for primeira visita da sessão
+    if (!sessionStorage.getItem("visitouSessao")) {
+        visitas = parseInt(visitas) + 1;
+        localStorage.setItem("visitasTotal", visitas);
+        sessionStorage.setItem("visitouSessao", "true");
+    }
 
+    contador.innerText = "👁️ Visitas: " + visitas;
+}
     // ============================
     // FORMULÁRIO (SEM CONFLITO)
     // ============================
