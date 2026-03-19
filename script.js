@@ -1,18 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     // ============================
-    // CONFIG (LOGO + TEXTO)
+    // CONFIG
     // ============================
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
-        if (document.getElementById('logo')) {
-            document.getElementById('logo').src = data.logo;
-        }
-
-        if (document.getElementById('descricao')) {
-            document.getElementById('descricao').innerText = data.descricao;
-        }
+        document.getElementById('logo').src = data.logo;
+        document.getElementById('descricao').innerText = data.descricao;
     });
 
 
@@ -23,10 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('eventos');
-        if (!container) return;
 
         data.eventos.forEach(ev => {
-
             let bloco = document.createElement('div');
             bloco.classList.add("evento");
 
@@ -54,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('sets');
-        if (!container) return;
 
         data.sets.forEach(set => {
             container.innerHTML += `
@@ -69,27 +61,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ============================
-    // CONTADOR (SEM F5)
+    // CONTADOR
     // ============================
-    const contador = document.getElementById("contador");
+    let visitas = localStorage.getItem("visitasTotal") || 0;
 
-    if (contador) {
-
-        let visitas = localStorage.getItem("visitasTotal");
-
-        if (!visitas) {
-            visitas = 1;
-            localStorage.setItem("visitasTotal", visitas);
-        }
-
-        if (!sessionStorage.getItem("visitouSessao")) {
-            visitas = parseInt(visitas) + 1;
-            localStorage.setItem("visitasTotal", visitas);
-            sessionStorage.setItem("visitouSessao", "true");
-        }
-
-        contador.innerText = "👁️ Visitas: " + visitas;
+    if (!sessionStorage.getItem("visitouSessao")) {
+        visitas++;
+        localStorage.setItem("visitasTotal", visitas);
+        sessionStorage.setItem("visitouSessao", "true");
     }
+
+    document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
+
+
+    // ============================
+    // FORMULÁRIO
+    // ============================
+    const form = document.getElementById("formDJ");
+    const status = document.getElementById("statusEnvio");
+    const btn = document.getElementById("btnEnviar");
+
+    form.addEventListener("submit", function () {
+
+        status.innerText = "📨 Enviando...";
+        btn.disabled = true;
+
+        setTimeout(() => {
+            status.innerText = "✅ Pedido enviado com sucesso!";
+            form.reset();
+            btn.disabled = false;
+        }, 1500);
+    });
 
 });
 
@@ -100,15 +102,4 @@ document.addEventListener("DOMContentLoaded", function () {
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display = content.style.display === "block" ? "none" : "block";
-}
-
-
-// ============================
-// MENSAGEM DE ENVIO (FORM)
-// ============================
-function mostrarMensagem() {
-    setTimeout(() => {
-        document.getElementById("statusEnvio").innerText = "✅ Mensagem enviada com sucesso!";
-        document.querySelector("form").reset();
-    }, 500);
 }
