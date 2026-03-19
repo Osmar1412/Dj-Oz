@@ -6,12 +6,15 @@
 <title>DJ Oz</title>
 
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 </head>
 
 <body>
 
-<div id="contador" class="contador">👁️ Visitas: 1</div>
+<div id="contador" class="contador"></div>
 
 <header class="hero">
     <img id="logo" class="logo-img">
@@ -42,27 +45,14 @@
 <section id="contato" class="contato">
     <h2>Contratar DJ</h2>
 
-    <form id="formDJ" action="https://formsubmit.co/osmar.dj.oz@gmail.com" method="POST" target="hidden_iframe">
-        
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="Novo orçamento DJ Oz">
-        <input type="hidden" name="_template" value="table">
-
-        <!-- REDIRECIONAMENTO INVISÍVEL -->
-        <input type="hidden" name="_next" value="https://example.com/obrigado.html">
-
-        <!-- RESPOSTA AUTOMÁTICA -->
-        <input type="hidden" name="_autoresponse" value="Olá! Recebemos seu pedido de orçamento 🎧. Obrigado pelo contato! Em breve retornaremos ou entraremos em contato via WhatsApp. DJ Oz 🔥">
-
+    <form id="formDJ">
         <input type="text" name="name" placeholder="Seu nome" required>
         <input type="email" name="email" placeholder="Seu email" required>
-        <input type="tel" name="whatsapp" placeholder="Seu WhatsApp (com DDD)" required>
+        <input type="tel" name="whatsapp" placeholder="Seu WhatsApp" required>
         <textarea name="message" placeholder="Detalhes do evento" required></textarea>
 
-        <button type="submit" id="btnEnviar">Enviar</button>
+        <button type="submit">Enviar</button>
     </form>
-
-    <iframe name="hidden_iframe" style="display:none;"></iframe>
 
     <p id="statusEnvio"></p>
 </section>
@@ -70,10 +60,12 @@
 <a href="https://wa.me/5511947865370" class="whatsapp">💬</a>
 
 <footer class="footer">
-    <p><strong>DJ Oz Eventos</strong></p>
-    <p>📱 WhatsApp: (11) 94786-5370</p>
-    <p>📧 Email: osmar.dj.oz@gmail.com</p>
-    <p>© 2026 Todos os direitos reservados</p>
+    <div class="footer-content">
+        <p>🎧 DJ Oz Eventos</p>
+        <p>📱 WhatsApp: (11) 94786-5370</p>
+        <p>📧 Email: osmar.dj.oz@gmail.com</p>
+        <p>© 2026 Todos os direitos reservados</p>
+    </div>
 </footer>
 
 <script src="script.js"></script>
