@@ -11,7 +11,10 @@
 
 <body>
 
-    <header class="hero">
+<!-- CONTADOR -->
+<div id="contador" class="contador"></div>
+
+<header class="hero">
     <img id="logo" class="logo-img">
     <p id="descricao"></p>
     
@@ -41,16 +44,18 @@
 <section id="contato" class="contato">
     <h2>Contratar DJ</h2>
 
-    <form action="https://formsubmit.co/osmar.dj.oz@gmail.com" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="Novo Contato DJ Oz">
-
+    <!-- FORMULÁRIO AJUSTADO -->
+    <form id="formContato">
         <input type="text" name="name" placeholder="Seu nome" required>
         <input type="email" name="email" placeholder="Seu email" required>
         <textarea name="message" placeholder="Detalhes do evento" required></textarea>
 
         <button type="submit">Enviar</button>
     </form>
+
+    <!-- MENSAGEM -->
+    <p id="statusEnvio"></p>
+
 </section>
 
 <a href="https://wa.me/5511947685370" class="whatsapp">💬</a>
