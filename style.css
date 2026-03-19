@@ -8,7 +8,6 @@ body {
 /* HERO */
 .hero {
     height: 100vh;
-    background: linear-gradient(black, #111);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,10 +15,9 @@ body {
 }
 
 /* LOGO */
-.logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 60px;
-    color: #00ffcc;
+.logo-img {
+    width: 200px;
+    margin-bottom: 20px;
 }
 
 /* MENU */
@@ -50,17 +48,46 @@ section {
     text-decoration: none;
 }
 
+.icon {
+    width: 20px;
+    margin-right: 8px;
+}
+
+/* EVENTOS */
+.evento {
+    margin: 20px;
+}
+
+.evento h3 {
+    background: #111;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.conteudo {
+    display: none;
+}
+
 /* GALERIA */
 .galeria img {
-    width: 300px;
+    width: 250px;
     margin: 10px;
     border-radius: 10px;
 }
 
-/* VIDEO */
+/* VÍDEO */
 .video iframe {
-    width: 80%;
-    height: 400px;
+    width: 300px;
+    height: 200px;
+    margin: 10px;
+}
+
+/* SETS */
+.set {
+    background: #111;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
 }
 
 /* FORM */
