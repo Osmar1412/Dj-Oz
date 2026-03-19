@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ============================
     // CONFIG
-    // ============================
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -10,10 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-
-    // ============================
     // EVENTOS
-    // ============================
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -39,10 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-
-    // ============================
     // SETS
-    // ============================
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -59,10 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-
-    // ============================
     // CONTADOR
-    // ============================
     let visitas = localStorage.getItem("visitasTotal") || 0;
 
     if (!sessionStorage.getItem("visitouSessao")) {
@@ -73,16 +62,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
-
-    // ============================
-    // FORMULÁRIO
-    // ============================
+    // FORM
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
     const btn = document.getElementById("btnEnviar");
 
     form.addEventListener("submit", function () {
-
         status.innerText = "📨 Enviando...";
         btn.disabled = true;
 
@@ -90,15 +75,12 @@ document.addEventListener("DOMContentLoaded", function () {
             status.innerText = "✅ Pedido enviado com sucesso!";
             form.reset();
             btn.disabled = false;
-        }, 1500);
+        }, 2000);
     });
 
 });
 
-
-// ============================
-// TOGGLE EVENTOS
-// ============================
+// TOGGLE
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display = content.style.display === "block" ? "none" : "block";
