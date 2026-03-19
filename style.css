@@ -117,3 +117,13 @@ button {
     padding: 15px;
     border-radius: 50%;
 }
+
+.contador {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background: #111;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+}
