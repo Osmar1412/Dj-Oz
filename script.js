@@ -1,6 +1,11 @@
+// INICIALIZA EMAILJS
+(function(){
+    emailjs.init("vY9bUzhQP96Kiag5h");
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
 
-    // CONFIG
+    // CONFIG (logo e descrição)
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -8,50 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // EVENTOS
-    fetch('eventos.json')
-    .then(res => res.json())
-    .then(data => {
-        const container = document.getElementById('eventos');
-
-        data.eventos.forEach(ev => {
-            let bloco = document.createElement('div');
-            bloco.classList.add("evento");
-
-            bloco.innerHTML = `
-                <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
-                <div class="conteudo">
-                    <div class="galeria">
-                        ${ev.fotos.map(f => `<img src="${f}">`).join("")}
-                    </div>
-                    <div class="video">
-                        ${ev.videos.map(v => `<iframe src="${v}"></iframe>`).join("")}
-                    </div>
-                </div>
-            `;
-
-            container.appendChild(bloco);
-        });
-    });
-
-    // SETS
-    fetch('sets.json')
-    .then(res => res.json())
-    .then(data => {
-        const container = document.getElementById('sets');
-
-        data.sets.forEach(set => {
-            container.innerHTML += `
-                <div class="set">
-                    <h3>${set.titulo}</h3>
-                    <p>${set.data}</p>
-                    <audio controls src="${set.audio}"></audio>
-                </div>
-            `;
-        });
-    });
-
-    // CONTADOR
+    // CONTADOR (não conta F5)
     let visitas = localStorage.getItem("visitasTotal") || 0;
 
     if (!sessionStorage.getItem("visitouSessao")) {
@@ -62,26 +24,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
-    // FORM
+    // FORMULÁRIO
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
-    const btn = document.getElementById("btnEnviar");
 
-    form.addEventListener("submit", function () {
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
         status.innerText = "📨 Enviando...";
-        btn.disabled = true;
 
-        setTimeout(() => {
-            status.innerText = "✅ Pedido enviado com sucesso!";
+        emailjs.sendForm("service_5fpydfh", "template_esjbqjl", this)
+        .then(() => {
+            status.innerText = "✅ Orçamento enviado com sucesso!";
             form.reset();
-            btn.disabled = false;
-        }, 2000);
+        })
+        .catch((error) => {
+            status.innerText = "❌ Erro ao enviar. Verifique configuração.";
+            console.log(error);
+        });
     });
 
 });
-
-// TOGGLE
-function toggle(el) {
-    const content = el.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
-}
