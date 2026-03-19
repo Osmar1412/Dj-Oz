@@ -54,23 +54,35 @@
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_subject" value="Novo orçamento DJ Oz">
         <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_autoresponse" value="Recebemos seu pedido! Em breve entraremos em contato.">
+
+        <!-- RESPOSTA AUTOMÁTICA -->
+        <input type="hidden" name="_autoresponse" value="Olá! Recebemos seu pedido de orçamento 🎧
+
+Obrigado pelo contato com a DJ Oz.
+
+Em breve retornaremos com todas as informações ou entraremos em contato pelo WhatsApp informado.
+
+Atenciosamente,
+DJ Oz 🔥">
 
         <input type="text" name="name" placeholder="Seu nome" required>
+
         <input type="email" name="email" placeholder="Seu email" required>
+
+        <!-- NOVO CAMPO WHATSAPP -->
+        <input type="tel" name="whatsapp" placeholder="Seu WhatsApp (com DDD)" required>
+
         <textarea name="message" placeholder="Detalhes do evento" required></textarea>
 
         <button type="submit">Enviar</button>
     </form>
 
-    <!-- IFRAME OCULTO (IMPRESCINDÍVEL) -->
+    <!-- IFRAME OCULTO -->
     <iframe name="hidden_iframe" style="display:none;"></iframe>
 
     <!-- MENSAGEM -->
     <p id="statusEnvio"></p>
-
 </section>
-
 <a href="https://wa.me/5511947685370" class="whatsapp">💬</a>
 
 <footer>
