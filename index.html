@@ -11,8 +11,8 @@
 
 <body>
 
-<!-- CONTADOR REAL -->
-<div id="contador" class="contador">Carregando...</div>
+<!-- CONTADOR -->
+<div id="contador" class="contador"></div>
 
 <header class="hero">
     <img id="logo" class="logo-img">
@@ -30,7 +30,7 @@
 
 <section id="sobre">
     <h2>Sobre</h2>
-    <p>DJ profissional especializado em casamentos, festas e eventos corporativos.</p>
+    <p>DJ profissional especializado em eventos.</p>
 </section>
 
 <section id="sets">
@@ -44,22 +44,15 @@
 <section id="contato" class="contato">
     <h2>Contratar DJ</h2>
 
-    <!-- FORMULÁRIO PROFISSIONAL -->
-    <form action="https://formsubmit.co/osmar.dj.oz@gmail.com" method="POST" target="_blank">
-        
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="Novo orçamento DJ Oz">
-        <input type="hidden" name="_template" value="table">
-
+    <form id="formContato">
         <input type="text" name="name" placeholder="Seu nome" required>
         <input type="email" name="email" placeholder="Seu email" required>
         <textarea name="message" placeholder="Detalhes do evento" required></textarea>
 
-        <button type="submit" onclick="alert('✅ Mensagem enviada com sucesso!')">
-            Enviar
-        </button>
+        <button type="submit">Enviar</button>
     </form>
 
+    <p id="statusEnvio"></p>
 </section>
 
 <a href="https://wa.me/5511947685370" class="whatsapp">💬</a>
@@ -69,11 +62,47 @@
 </footer>
 
 <script>
-// CONTADOR REAL ONLINE (NÃO CONTA F5)
-fetch('https://api.countapi.xyz/hit/djoz-site/visitas')
-.then(res => res.json())
-.then(res => {
-    document.getElementById("contador").innerText = "👁️ Visitas: " + res.value;
+// ============================
+// CONTADOR (NÃO CONTA F5)
+// ============================
+if (!localStorage.getItem("visitou")) {
+    fetch('https://api.countapi.xyz/hit/djoz-unico/visitas')
+    .then(res => res.json())
+    .then(res => {
+        document.getElementById("contador").innerText = "👁️ Visitas: " + res.value;
+    });
+
+    localStorage.setItem("visitou", "true");
+} else {
+    fetch('https://api.countapi.xyz/get/djoz-unico/visitas')
+    .then(res => res.json())
+    .then(res => {
+        document.getElementById("contador").innerText = "👁️ Visitas: " + res.value;
+    });
+}
+
+
+// ============================
+// FORMULÁRIO (E-MAIL SEPARADO)
+// ============================
+document.getElementById("formContato").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = new FormData(form);
+
+    fetch("https://formsubmit.co/ajax/osmar.dj.oz@gmail.com", {
+        method: "POST",
+        body: data
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("statusEnvio").innerText = "✅ Mensagem enviada com sucesso!";
+        form.reset();
+    })
+    .catch(error => {
+        document.getElementById("statusEnvio").innerText = "❌ Erro ao enviar. Tente novamente.";
+    });
 });
 </script>
 
