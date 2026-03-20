@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // EVENTOS (CARROSSEL NOVO)
+    // EVENTOS (CARROSSEL PREMIUM)
     // ============================
     fetch('eventos.json')
     .then(res => res.json())
@@ -71,20 +71,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
 
                 <div class="conteudo">
-
                     <div class="carrossel-wrapper">
 
-                        <button class="seta esquerda" onclick="scrollGaleria(${index}, -1)">❮</button>
+                        <button class="seta esquerda" aria-label="Anterior" onclick="scrollGaleria(${index}, -1)">
+                            ❮
+                        </button>
 
                         <div class="carrossel" id="galeria-${index}">
                             ${ev.fotos.map(f => `<img src="${f}">`).join("")}
                             ${ev.videos.map(v => `<iframe src="${v}" frameborder="0" allowfullscreen></iframe>`).join("")}
                         </div>
 
-                        <button class="seta direita" onclick="scrollGaleria(${index}, 1)">❯</button>
+                        <button class="seta direita" aria-label="Próximo" onclick="scrollGaleria(${index}, 1)">
+                            ❯
+                        </button>
 
                     </div>
-
                 </div>
             `;
 
