@@ -4,7 +4,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Configuração do logo e descrição
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -12,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // Contador de visitas
     let visitas = localStorage.getItem("visitasTotal") || 0;
     if (!sessionStorage.getItem("visitou")) {
         visitas++;
@@ -21,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
-    // Formulário
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
@@ -40,12 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Sets com capa estilo Spotify (6 por página)
+    // Sets com players DJ
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('sets-container');
-
         container.innerHTML = `
             <div class="carrossel-wrapper">
                 <button class="seta esquerda" onclick="scrollGaleria('sets-carrossel', -1)">❮</button>
@@ -54,7 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="set-card">
                             <img src="${set.capa}" class="set-capa">
                             <h3>${set.titulo}</h3>
-                            <audio controls src="${set.audio}"></audio>
+                            <div class="player-dj">
+                                <audio controls src="${set.audio}"></audio>
+                            </div>
                         </div>
                     `).join("")}
                 </div>
@@ -63,12 +61,11 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     });
 
-    // Eventos com fotos e vídeos 6 por página
+    // Eventos
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('eventos');
-
         data.eventos.forEach((ev, index) => {
             container.innerHTML += `
                 <div class="evento">
@@ -93,7 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// Funções auxiliares
 function toggle(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
@@ -104,7 +100,6 @@ function toggleSection(el) {
     c.style.display = c.style.display === "block" ? "none" : "block";
 }
 
-// Scroll proporcional 6 itens
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
     const item = el.children[0];
