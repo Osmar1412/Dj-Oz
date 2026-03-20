@@ -3,6 +3,9 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #000;
     color: white;
+
+    /* 🔥 REMOVE BUG DE "TELA BALANÇANDO" */
+    overflow-x: hidden;
 }
 
 /* HERO */
@@ -29,6 +32,7 @@ nav {
 nav a {
     color: #00ffcc;
     margin: 10px;
+    text-decoration: none;
 }
 
 /* SEÇÕES */
@@ -41,22 +45,25 @@ section {
 .btn {
     background: #00ffcc;
     color: black;
-    padding: 15px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    text-decoration: none;
 }
 
 /* ============================
-   CARROSSEL GLOBAL
+   CARROSSEL
 ============================ */
 
 .carrossel-wrapper {
     position: relative;
+    max-width: 100%;
 }
 
 .carrossel {
     display: flex;
     overflow-x: auto;
     gap: 15px;
-    padding: 20px 50px;
+    padding: 20px 40px;
     scroll-behavior: smooth;
 }
 
@@ -70,6 +77,7 @@ section {
     width: 260px;
     height: 160px;
     border-radius: 10px;
+    flex-shrink: 0;
 }
 
 /* SETAS */
@@ -77,54 +85,46 @@ section {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(0,0,0,0.7);
+    width: 45px;
+    height: 45px;
+    background: rgba(0,0,0,0.6);
     color: #00ffcc;
     border-radius: 50%;
     cursor: pointer;
+    border: none;
     opacity: 0;
-    transition: 0.3s;
 }
 
 .carrossel-wrapper:hover .seta {
     opacity: 1;
 }
 
-.esquerda { left: 0; }
-.direita { right: 0; }
+.esquerda { left: 5px; }
+.direita { right: 5px; }
 
 /* ============================
-   SETS DJ STYLE
+   SETS
 ============================ */
 
 .set-card {
     min-width: 260px;
     background: #111;
-    border-radius: 10px;
     padding: 15px;
+    border-radius: 10px;
     flex-shrink: 0;
-
-    transition: 0.3s;
 }
 
 .set-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #00ffcc;
-}
-
-.set-card h3 {
-    color: #00ffcc;
+    box-shadow: 0 0 15px #00ffcc;
 }
 
 /* PLAYER */
-.player audio {
+audio {
     width: 100%;
     margin-top: 10px;
-    filter: invert(1) hue-rotate(140deg);
 }
 
-/* EQUALIZER ANIMADO */
+/* EQUALIZER */
 .equalizer {
     display: flex;
     justify-content: center;
@@ -136,17 +136,13 @@ section {
     width: 4px;
     height: 10px;
     background: #00ffcc;
-    animation: bounce 1s infinite ease-in-out;
+    animation: eq 1s infinite;
 }
 
-.equalizer span:nth-child(2) {
-    animation-delay: 0.2s;
-}
-.equalizer span:nth-child(3) {
-    animation-delay: 0.4s;
-}
+.equalizer span:nth-child(2) { animation-delay: 0.2s; }
+.equalizer span:nth-child(3) { animation-delay: 0.4s; }
 
-@keyframes bounce {
+@keyframes eq {
     0%,100% { height: 10px; }
     50% { height: 20px; }
 }
@@ -162,13 +158,25 @@ section {
     display: none;
 }
 
-/* FORM */
+/* FORM (RESTAURADO) */
+.contato form {
+    max-width: 500px;
+    margin: auto;
+}
+
 input, textarea {
     width: 100%;
     margin: 10px;
+    padding: 10px;
 }
 
-/* WHATSAPP */
+button {
+    background: #00ffcc;
+    padding: 15px;
+    border: none;
+}
+
+/* WHATSAPP (CORRIGIDO) */
 .whatsapp {
     position: fixed;
     bottom: 20px;
@@ -176,15 +184,23 @@ input, textarea {
     background: #25D366;
     padding: 15px;
     border-radius: 50%;
+    z-index: 999;
+}
+
+.whatsapp img {
+    width: 28px;
+    height: 28px;
 }
 
 /* CONTADOR */
 #contador {
     color: #00ffcc;
+    margin-top: 10px;
 }
 
 /* FOOTER */
-.footer {
+footer {
     text-align: center;
     padding: 20px;
+    background: #111;
 }
