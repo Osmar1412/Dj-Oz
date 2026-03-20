@@ -14,19 +14,43 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // CONTADOR FUNCIONANDO
+    // CONTADOR PROFISSIONAL
     // ============================
-    fetch('https://api.counterapi.dev/v1/djoz/visitas/up')
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById("contador").innerText = data.data.up_count;
-    })
-    .catch(() => {
-        document.getElementById("contador").innerText = "1";
-    });
+    const contador = document.getElementById("contador");
+
+    // chave única do visitante
+    let visitante = localStorage.getItem("visitante_id");
+
+    if (!visitante) {
+        visitante = Date.now() + Math.random();
+        localStorage.setItem("visitante_id", visitante);
+
+        // conta apenas novo visitante
+        fetch("https://api.countapi.xyz/hit/djoz/visitas")
+        .then(res => res.json())
+        .then(data => {
+            contador.innerText = "👁️ Visitas: " + data.value;
+        })
+        .catch(() => {
+            contador.innerText = "👁️ Visitas: --";
+        });
+
+    } else {
+        // apenas consulta (não incrementa)
+        fetch("https://api.countapi.xyz/get/djoz/visitas")
+        .then(res => res.json())
+        .then(data => {
+            contador.innerText = "👁️ Visitas: " + data.value;
+        })
+        .catch(() => {
+            contador.innerText = "👁️ Visitas: --";
+        });
+    }
 
 
+    // ============================
     // EVENTOS
+    // ============================
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -52,7 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // ============================
     // SETS
+    // ============================
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -69,7 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // ============================
     // FORM
+    // ============================
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
@@ -93,9 +121,8 @@ document.addEventListener("DOMContentLoaded", function () {
             status.innerText = "✅ Pedido enviado com sucesso!";
             form.reset();
         })
-        .catch((error) => {
+        .catch(() => {
             status.innerText = "❌ Erro ao enviar.";
-            console.log(error);
         });
     });
 
