@@ -162,3 +162,15 @@ button {
     font-size: 14px;
     color: #00ffcc;
 }
+
+.contador-box {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#contador {
+    color: #00ffcc;
+    font-size: 14px;
+}
