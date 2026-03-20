@@ -5,9 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ============================
     // CONFIG
-    // ============================
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -15,9 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // ============================
-    // CONTADOR (SEM BUG)
-    // ============================
+    // CONTADOR (SEM F5)
     let visitas = localStorage.getItem("visitasTotal") || 0;
 
     if (!sessionStorage.getItem("visitou")) {
@@ -28,9 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
-    // ============================
-    // FORMULÁRIO (CORRIGIDO)
-    // ============================
+    // FORMULÁRIO
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
@@ -40,9 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         status.innerText = "📨 Enviando...";
 
         emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
-        .then(() => {
-            return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
-        })
+        .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
         .then(() => {
             status.innerText = "✅ Pedido enviado com sucesso!";
             form.reset();
@@ -52,16 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ============================
     // EVENTOS
-    // ============================
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('eventos');
 
         data.eventos.forEach((ev, index) => {
-
             container.innerHTML += `
                 <div class="evento">
                     <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
@@ -85,9 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ============================
-    // SETS (CARROSSEL CORRIGIDO)
-    // ============================
+    // SETS
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -103,12 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="set-card">
                             <h3>${set.titulo}</h3>
                             <p>${set.data}</p>
-
                             <audio controls src="${set.audio}"></audio>
-
-                            <div class="equalizer">
-                                <span></span><span></span><span></span>
-                            </div>
                         </div>
                     `).join("")}
                 </div>
@@ -121,9 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// ============================
 // FUNÇÕES
-// ============================
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
