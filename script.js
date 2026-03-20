@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         container.innerHTML = `
             <div class="carrossel-wrapper">
-
                 <button class="seta esquerda" onclick="scrollGaleria('sets-carrossel', -1)">❮</button>
 
                 <div class="carrossel" id="sets-carrossel">
@@ -65,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
 
                 <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">❯</button>
-
             </div>
         `;
     });
@@ -88,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             <div class="carrossel" id="evento-${index}">
                                 ${ev.fotos.map(f => `<img src="${f}">`).join("")}
-                                ${ev.videos.map(v => `<iframe src="${v}"></iframe>`).join("")}
+                                ${ev.videos.map(v => `<iframe src="${v}" frameborder="0" allowfullscreen></iframe>`).join("")}
                             </div>
 
                             <button class="seta direita" onclick="scrollGaleria('evento-${index}', 1)">❯</button>
