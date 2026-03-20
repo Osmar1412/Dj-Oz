@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Sets com players DJ
+    // Sets com players estilo DJ Equalizador
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -50,8 +50,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="set-card">
                             <img src="${set.capa}" class="set-capa">
                             <h3>${set.titulo}</h3>
-                            <div class="player-dj">
-                                <audio controls src="${set.audio}"></audio>
+                            <div class="player-eq">
+                                <audio src="${set.audio}" controls></audio>
+                                <div class="eq-bars">
+                                    ${Array(8).fill('<div class="bar"></div>').join('')}
+                                </div>
                             </div>
                         </div>
                     `).join("")}
@@ -59,6 +62,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">❯</button>
             </div>
         `;
+
+        // Animar barras
+        setInterval(() => {
+            document.querySelectorAll('.player-eq .bar').forEach(bar => {
+                bar.style.height = Math.random() * 100 + '%';
+            });
+        }, 250);
     });
 
     // Eventos
@@ -102,9 +112,8 @@ function toggleSection(el) {
 
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
+    if (!el) return;
     const item = el.children[0];
-    if (!item) return;
-
-    const largura = item.offsetWidth + 20;
+    const largura = item ? item.offsetWidth + 20 : 300;
     el.scrollBy({ left: dir * largura * 6, behavior: "smooth" });
 }
