@@ -5,50 +5,71 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // CONFIG
+    // ============================
+    // CONFIG (LOGO + TEXTO)
+    // ============================
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
-        document.getElementById('logo').src = data.logo;
-        document.getElementById('descricao').innerText = data.descricao;
+        const logo = document.getElementById('logo');
+        const desc = document.getElementById('descricao');
+
+        if (logo) logo.src = data.logo;
+        if (desc) desc.innerText = data.descricao;
     });
 
+    // ============================
     // CONTADOR (SEM F5)
-    let visitas = localStorage.getItem("visitasTotal") || 0;
+    // ============================
+    const contador = document.getElementById("contador");
 
-    if (!sessionStorage.getItem("visitou")) {
-        visitas++;
-        localStorage.setItem("visitasTotal", visitas);
-        sessionStorage.setItem("visitou", "true");
+    if (contador) {
+        let visitas = localStorage.getItem("visitasTotal") || 0;
+
+        if (!sessionStorage.getItem("visitou")) {
+            visitas++;
+            localStorage.setItem("visitasTotal", visitas);
+            sessionStorage.setItem("visitou", "true");
+        }
+
+        contador.innerText = "👁️ Visitas: " + visitas;
     }
 
-    document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
-
-    // FORMULÁRIO
+    // ============================
+    // FORMULÁRIO (EMAILJS)
+    // ============================
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
+    if (form) {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
 
-        status.innerText = "📨 Enviando...";
+            status.innerText = "📨 Enviando...";
 
-        emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
-        .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
-        .then(() => {
-            status.innerText = "✅ Pedido enviado com sucesso!";
-            form.reset();
-        })
-        .catch(() => {
-            status.innerText = "❌ Erro ao enviar.";
+            emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
+            .then(() => {
+                return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
+            })
+            .then(() => {
+                status.innerText = "✅ Pedido enviado com sucesso!";
+                form.reset();
+            })
+            .catch((error) => {
+                console.log(error);
+                status.innerText = "❌ Erro ao enviar.";
+            });
         });
-    });
+    }
 
-    // EVENTOS
+    // ============================
+    // EVENTOS (COM CARROSSEL)
+    // ============================
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('eventos');
+        if (!container) return;
 
         data.eventos.forEach((ev, index) => {
             container.innerHTML += `
@@ -74,11 +95,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // SETS
+    // ============================
+    // SETS (COM NEON GARANTIDO)
+    // ============================
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('sets');
+        if (!container) return;
 
         container.innerHTML = `
             <div class="carrossel-wrapper">
@@ -90,7 +114,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="set-card">
                             <h3>${set.titulo}</h3>
                             <p>${set.data}</p>
-                            <audio controls src="${set.audio}"></audio>
+
+                            <audio controls>
+                                <source src="${set.audio}" type="audio/mpeg">
+                            </audio>
+
                         </div>
                     `).join("")}
                 </div>
@@ -103,7 +131,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// FUNÇÕES
+// ============================
+// FUNÇÕES GLOBAIS
+// ============================
+
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
@@ -112,6 +143,9 @@ function toggle(el) {
 
 function scrollGaleria(id, direction) {
     const el = document.getElementById(id);
+
+    if (!el) return;
+
     el.scrollBy({
         left: direction * 300,
         behavior: "smooth"
