@@ -48,11 +48,6 @@ section {
     text-decoration: none;
 }
 
-.icon {
-    width: 20px;
-    margin-right: 8px;
-}
-
 /* EVENTOS */
 .evento {
     margin: 20px;
@@ -68,18 +63,75 @@ section {
     display: none;
 }
 
-/* GALERIA */
-.galeria img {
-    width: 250px;
-    margin: 10px;
-    border-radius: 10px;
+/* ============================
+   CARROSSEL PREMIUM
+============================ */
+
+.carrossel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-/* VÍDEO */
-.video iframe {
-    width: 300px;
-    height: 200px;
-    margin: 10px;
+.carrossel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 15px;
+    padding: 20px 50px;
+}
+
+.carrossel::-webkit-scrollbar {
+    display: none;
+}
+
+.carrossel img,
+.carrossel iframe {
+    width: 260px;
+    height: 160px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    transition: 0.3s;
+}
+
+.carrossel img:hover,
+.carrossel iframe:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00ffcc;
+}
+
+/* SETAS PROFISSIONAIS */
+.seta {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    color: #00ffcc;
+    border: 1px solid rgba(0,255,204,0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    opacity: 0;
+}
+
+.esquerda { left: 0; }
+.direita { right: 0; }
+
+.carrossel-wrapper:hover .seta {
+    opacity: 1;
+}
+
+.seta:hover {
+    background: #00ffcc;
+    color: black;
+    transform: translateY(-50%) scale(1.1);
 }
 
 /* SETS */
@@ -116,92 +168,6 @@ button {
     background: #25D366;
     padding: 15px;
     border-radius: 50%;
-}
-
-.contador {
-    position: fixed;
-    top: 10px;
-    right: 20px;
-    background: #111;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-size: 14px;
-}
-
-.footer {
-    text-align: center;
-    padding: 30px;
-    background: #111;
-}
-
-.footer-content p {
-    margin: 8px 0;
-    font-size: 16px;
-}
-
-.whatsapp {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25D366;
-    padding: 15px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.whatsapp img {
-    width: 28px;
-    height: 28px;
-    filter: invert(1); /* deixa o ícone branco */
-}
-
-.contador {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #00ffcc;
-}
-
-.contador-box {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-#contador {
-    color: #00ffcc;
-    font-size: 14px;
-}
-
-.contador {
-    margin-top: 15px;
-    font-size: 16px;
-    color: #00ffcc;
-    text-align: center;
-}
-
-.contador-box {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-}
-
-#contador {
-    color: #00ffcc;
-    font-size: 15px;
-}
-
-/* WHATSAPP CORRETO */
-.whatsapp {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25D366;
-    padding: 15px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -213,55 +179,20 @@ button {
     filter: invert(1);
 }
 
-/* ============================
-   CARROSSEL PROFISSIONAL
-============================ */
-
-.carrossel-wrapper {
-    position: relative;
+/* CONTADOR */
+.contador-box {
+    margin-top: 15px;
     display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
-.carrossel {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    gap: 15px;
-    padding: 20px;
-}
-
-/* Esconde barra */
-.carrossel::-webkit-scrollbar {
-    display: none;
-}
-
-/* ITENS (LIMITA VISUAL) */
-.carrossel img,
-.carrossel iframe {
-    width: 250px;
-    height: 160px;
-    border-radius: 10px;
-    flex-shrink: 0;
-}
-
-/* SETAS */
-.seta {
-    position: absolute;
-    background: rgba(0,0,0,0.7);
+#contador {
     color: #00ffcc;
-    border: none;
-    font-size: 25px;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 2;
-    border-radius: 50%;
 }
 
-.esquerda {
-    left: 5px;
-}
-
-.direita {
-    right: 5px;
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 30px;
+    background: #111;
 }
