@@ -1,10 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Carrega logo
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
         document.getElementById('logo').src = data.logo;
     });
 
+    // Carrega eventos
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -12,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data.eventos.forEach((ev,index) => {
             container.innerHTML += `
                 <div class="evento">
-                    <h3>${ev.titulo} - ${ev.data}</h3>
+                    <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
                     <div class="conteudo">
                         <div class="carrossel-wrapper">
                             <button class="seta esquerda" onclick="scrollGaleria('evento-${index}', -1)">❮</button>
@@ -27,7 +30,14 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
         });
     });
+
 });
+
+// FUNÇÕES
+function toggleSection(el) {
+    const c = el.nextElementSibling;
+    c.style.display = c.style.display === "block" ? "none" : "block";
+}
 
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
@@ -35,4 +45,9 @@ function scrollGaleria(id, dir) {
     const item = el.children[0];
     const largura = item ? item.offsetWidth + 20 : 300;
     el.scrollBy({ left: dir * largura * 6, behavior: "smooth" });
+}
+
+function toggle(el) {
+    const c = el.nextElementSibling;
+    c.style.display = c.style.display === "block" ? "none" : "block";
 }
