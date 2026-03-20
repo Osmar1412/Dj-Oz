@@ -53,19 +53,21 @@ document.addEventListener("DOMContentLoaded", function () {
         data.eventos.forEach((ev, index) => {
             container.innerHTML += `
                 <div class="evento">
-                    <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
+                    <h3 onclick="toggle(this)" class="titulo-click">
+                        ${ev.titulo} - ${ev.data}
+                    </h3>
 
                     <div class="conteudo">
                         <div class="carrossel-wrapper">
 
-                            <button class="seta esquerda" onclick="scrollGaleria('evento-${index}', -1)">❮</button>
+                            <button class="seta esquerda" onclick="scrollGaleria('evento-${index}', -1)">‹</button>
 
                             <div class="carrossel" id="evento-${index}">
                                 ${ev.fotos.map(f => `<img src="${f}">`).join("")}
                                 ${ev.videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
                             </div>
 
-                            <button class="seta direita" onclick="scrollGaleria('evento-${index}', 1)">❯</button>
+                            <button class="seta direita" onclick="scrollGaleria('evento-${index}', 1)">›</button>
 
                         </div>
                     </div>
@@ -78,19 +80,18 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
-        const container = document.getElementById('sets');
+        const container = document.getElementById('setsContent');
 
         container.innerHTML = `
             <div class="carrossel-wrapper">
 
-                <button class="seta esquerda" onclick="scrollGaleria('sets-carrossel', -1)">❮</button>
+                <button class="seta esquerda" onclick="scrollGaleria('sets-carrossel', -1)">‹</button>
 
                 <div class="carrossel" id="sets-carrossel">
                     ${data.sets.map(set => `
                         <div class="set-card">
                             <h3>${set.titulo}</h3>
                             <p>${set.data}</p>
-
                             <audio controls>
                                 <source src="${set.audio}">
                             </audio>
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     `).join("")}
                 </div>
 
-                <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">❯</button>
+                <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">›</button>
 
             </div>
         `;
@@ -106,13 +107,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+// TOGGLE
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
         content.style.display === "block" ? "none" : "block";
 }
 
-// SCROLL 6 ITENS
+// TOGGLE SECTION
+function toggleSection(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === "none" ? "block" : "none";
+}
+
+// SCROLL
 function scrollGaleria(id, direction) {
     const el = document.getElementById(id);
     const item = el.querySelector('*');
@@ -120,6 +128,7 @@ function scrollGaleria(id, direction) {
     if (!item) return;
 
     const largura = item.offsetWidth + 15;
+
     el.scrollBy({
         left: largura * 6 * direction,
         behavior: "smooth"
