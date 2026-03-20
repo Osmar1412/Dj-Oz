@@ -16,31 +16,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // CONTADOR SIMPLES (SEM F5)
+    // CONTADOR (CORRIGIDO)
     // ============================
     const contador = document.getElementById("contador");
 
-    let visitas = localStorage.getItem("visitasTotal");
+    let visitas = localStorage.getItem("visitasTotal") || 0;
 
-    // Se nunca visitou
-    if (!visitas) {
-        visitas = 1;
+    // Só conta 1 vez por sessão (evita F5)
+    if (!sessionStorage.getItem("visitou")) {
+        visitas++;
         localStorage.setItem("visitasTotal", visitas);
-    } else {
-        visitas = parseInt(visitas);
-
-        // Só incrementa se for NOVA VISITA REAL (não F5)
-        if (!sessionStorage.getItem("visitou")) {
-            visitas++;
-            localStorage.setItem("visitasTotal", visitas);
-            sessionStorage.setItem("visitou", "true");
-        }
+        sessionStorage.setItem("visitou", "true");
     }
 
     contador.innerText = "👁️ Visitas: " + visitas;
 
+
     // ============================
-    // FORMULÁRIO EMAILJS
+    // FORMULÁRIO
     // ============================
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
@@ -50,21 +43,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         status.innerText = "📨 Enviando...";
 
-        // ENVIA PRA VOCÊ
         emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
         .then(() => {
-
-            // ENVIA RESPOSTA AUTOMÁTICA
             return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
-
         })
         .then(() => {
             status.innerText = "✅ Pedido enviado com sucesso!";
             form.reset();
         })
-        .catch((error) => {
+        .catch(() => {
             status.innerText = "❌ Erro ao enviar.";
-            console.log(error);
         });
     });
 
@@ -77,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const container = document.getElementById('eventos');
 
         data.eventos.forEach(ev => {
-
             let bloco = document.createElement('div');
             bloco.classList.add("evento");
 
@@ -118,5 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // TOGGLE
 function toggle(el) {
     const content = el.nextElementSibling;
-    content.style.display = content.style.display === "block" ? "none" : "block";
+    content.style.display =
+        content.style.display === "block" ? "none" : "block";
 }
