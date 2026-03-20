@@ -5,9 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ============================
     // CONFIG
-    // ============================
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -15,11 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // ============================
     // CONTADOR
-    // ============================
-    const contador = document.getElementById("contador");
-
     let visitas = localStorage.getItem("visitasTotal") || 0;
 
     if (!sessionStorage.getItem("visitou")) {
@@ -28,11 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
         sessionStorage.setItem("visitou", "true");
     }
 
-    contador.innerText = "👁️ Visitas: " + visitas;
+    document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
-    // ============================
     // FORMULÁRIO
-    // ============================
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
@@ -42,9 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         status.innerText = "📨 Enviando...";
 
         emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
-        .then(() => {
-            return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
-        })
+        .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
         .then(() => {
             status.innerText = "✅ Pedido enviado com sucesso!";
             form.reset();
@@ -55,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // EVENTOS (CARROSSEL PREMIUM)
+    // EVENTOS (CARROSSEL)
     // ============================
     fetch('eventos.json')
     .then(res => res.json())
@@ -73,18 +63,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="conteudo">
                     <div class="carrossel-wrapper">
 
-                        <button class="seta esquerda" aria-label="Anterior" onclick="scrollGaleria(${index}, -1)">
-                            ❮
-                        </button>
+                        <button class="seta esquerda" onclick="scrollGaleria(${index}, -1)">❮</button>
 
                         <div class="carrossel" id="galeria-${index}">
                             ${ev.fotos.map(f => `<img src="${f}">`).join("")}
-                            ${ev.videos.map(v => `<iframe src="${v}" frameborder="0" allowfullscreen></iframe>`).join("")}
+                            ${ev.videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
                         </div>
 
-                        <button class="seta direita" aria-label="Próximo" onclick="scrollGaleria(${index}, 1)">
-                            ❯
-                        </button>
+                        <button class="seta direita" onclick="scrollGaleria(${index}, 1)">❯</button>
 
                     </div>
                 </div>
@@ -95,19 +81,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // SETS
+    // SETS PROFISSIONAL
     // ============================
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('sets');
 
-        data.sets.forEach(set => {
+        data.sets.forEach((set, index) => {
+
             container.innerHTML += `
-                <div class="set">
-                    <h3>${set.titulo}</h3>
-                    <p>${set.data}</p>
-                    <audio controls src="${set.audio}"></audio>
+                <div class="set-card">
+
+                    <div class="set-info">
+                        <h3>${set.titulo}</h3>
+                        <p>${set.data}</p>
+                    </div>
+
+                    <div class="player">
+                        <audio controls src="${set.audio}"></audio>
+                    </div>
+
                 </div>
             `;
         });
@@ -115,18 +109,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// ============================
-// TOGGLE
-// ============================
+// TOGGLE EVENTOS
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
         content.style.display === "block" ? "none" : "block";
 }
 
-// ============================
-// SCROLL GALERIA
-// ============================
+// SCROLL
 function scrollGaleria(index, direction) {
     const galeria = document.getElementById(`galeria-${index}`);
     galeria.scrollLeft += direction * 300;
