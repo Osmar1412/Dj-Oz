@@ -38,7 +38,11 @@
 </section>
 
 <section id="sets">
-    <h2>Sets & Mixagens</h2>
+    <h2 onclick="toggleSection('setsContent')" class="titulo-click">
+        🎧 Sets & Mixagens
+    </h2>
+
+    <div id="setsContent"></div>
 </section>
 
 <section id="eventos">
@@ -49,7 +53,6 @@
     <h2>Solicitar Orçamento</h2>
 
     <form id="formDJ" class="form-dj">
-
         <div class="input-group">
             <input type="text" name="name" required>
             <label>Nome</label>
@@ -71,13 +74,11 @@
         </div>
 
         <button type="submit" class="btn-enviar">Enviar Pedido</button>
-
     </form>
 
     <p id="statusEnvio"></p>
 </section>
 
-<!-- WHATSAPP -->
 <a href="https://wa.me/5511947865370" class="whatsapp" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
@@ -102,6 +103,5 @@
 </footer>
 
 <script src="script.js"></script>
-
 </body>
 </html>
