@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
-    // FORMULÁRIO
+    // FORM
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
         .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
         .then(() => {
-            status.innerText = "✅ Pedido enviado com sucesso!";
+            status.innerText = "✅ Pedido enviado!";
             form.reset();
         })
         .catch(() => {
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // EVENTOS (CARROSSEL)
+    // EVENTOS
     // ============================
     fetch('eventos.json')
     .then(res => res.json())
@@ -54,62 +54,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
         data.eventos.forEach((ev, index) => {
 
-            let bloco = document.createElement('div');
-            bloco.classList.add("evento");
+            container.innerHTML += `
+                <div class="evento">
+                    <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
 
-            bloco.innerHTML = `
-                <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
+                    <div class="conteudo">
+                        <div class="carrossel-wrapper">
 
-                <div class="conteudo">
-                    <div class="carrossel-wrapper">
+                            <button class="seta esquerda" onclick="scrollGaleria('evento-${index}', -1)">❮</button>
 
-                        <button class="seta esquerda" onclick="scrollGaleria(${index}, -1)">❮</button>
+                            <div class="carrossel" id="evento-${index}">
+                                ${ev.fotos.map(f => `<img src="${f}">`).join("")}
+                                ${ev.videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
+                            </div>
 
-                        <div class="carrossel" id="galeria-${index}">
-                            ${ev.fotos.map(f => `<img src="${f}">`).join("")}
-                            ${ev.videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
+                            <button class="seta direita" onclick="scrollGaleria('evento-${index}', 1)">❯</button>
+
                         </div>
-
-                        <button class="seta direita" onclick="scrollGaleria(${index}, 1)">❯</button>
-
                     </div>
                 </div>
             `;
-
-            container.appendChild(bloco);
         });
     });
 
     // ============================
-    // SETS PROFISSIONAL
+    // SETS (CARROSSEL PROFISSIONAL)
     // ============================
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('sets');
 
-        data.sets.forEach((set, index) => {
+        container.innerHTML = `
+            <div class="carrossel-wrapper">
 
-            container.innerHTML += `
-                <div class="set-card">
+                <button class="seta esquerda" onclick="scrollGaleria('sets-carrossel', -1)">❮</button>
 
-                    <div class="set-info">
-                        <h3>${set.titulo}</h3>
-                        <p>${set.data}</p>
-                    </div>
+                <div class="carrossel" id="sets-carrossel">
+                    ${data.sets.map(set => `
+                        <div class="set-card">
+                            <h3>${set.titulo}</h3>
+                            <p>${set.data}</p>
 
-                    <div class="player">
-                        <audio controls src="${set.audio}"></audio>
-                    </div>
+                            <div class="player">
+                                <audio controls src="${set.audio}"></audio>
+                            </div>
 
+                            <div class="equalizer">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                    `).join("")}
                 </div>
-            `;
-        });
+
+                <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">❯</button>
+
+            </div>
+        `;
     });
 
 });
 
-// TOGGLE EVENTOS
+// TOGGLE
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
@@ -117,7 +123,7 @@ function toggle(el) {
 }
 
 // SCROLL
-function scrollGaleria(index, direction) {
-    const galeria = document.getElementById(`galeria-${index}`);
-    galeria.scrollLeft += direction * 300;
+function scrollGaleria(id, direction) {
+    const el = document.getElementById(id);
+    el.scrollLeft += direction * 320;
 }
