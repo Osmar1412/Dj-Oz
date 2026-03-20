@@ -5,75 +5,52 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ============================
-    // CONFIG (LOGO + TEXTO)
-    // ============================
+    // CONFIG
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
-        const logo = document.getElementById('logo');
-        const desc = document.getElementById('descricao');
-
-        if (logo) logo.src = data.logo;
-        if (desc) desc.innerText = data.descricao;
+        document.getElementById('logo').src = data.logo;
+        document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // ============================
-    // CONTADOR (SEM F5)
-    // ============================
-    const contador = document.getElementById("contador");
+    // CONTADOR
+    let visitas = localStorage.getItem("visitasTotal") || 0;
 
-    if (contador) {
-        let visitas = localStorage.getItem("visitasTotal") || 0;
-
-        if (!sessionStorage.getItem("visitou")) {
-            visitas++;
-            localStorage.setItem("visitasTotal", visitas);
-            sessionStorage.setItem("visitou", "true");
-        }
-
-        contador.innerText = "👁️ Visitas: " + visitas;
+    if (!sessionStorage.getItem("visitou")) {
+        visitas++;
+        localStorage.setItem("visitasTotal", visitas);
+        sessionStorage.setItem("visitou", "true");
     }
 
-    // ============================
-    // FORMULÁRIO (EMAILJS)
-    // ============================
+    document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
+
+    // FORM
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
-    if (form) {
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-            status.innerText = "📨 Enviando...";
+        status.innerText = "📨 Enviando...";
 
-            emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
-            .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
-            .then(() => {
-                status.innerText = "✅ Pedido enviado com sucesso!";
-                form.reset();
-            })
-            .catch((error) => {
-                console.log(error);
-                status.innerText = "❌ Erro ao enviar.";
-            });
+        emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
+        .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
+        .then(() => {
+            status.innerText = "✅ Pedido enviado com sucesso!";
+            form.reset();
+        })
+        .catch(() => {
+            status.innerText = "❌ Erro ao enviar.";
         });
-    }
+    });
 
-    // ============================
-    // EVENTOS (6 VISÍVEIS + CARROSSEL)
-    // ============================
+    // EVENTOS
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('eventos');
-        if (!container) return;
 
         data.eventos.forEach((ev, index) => {
-
-            const fotos = ev.fotos || [];
-            const videos = ev.videos || [];
-
             container.innerHTML += `
                 <div class="evento">
                     <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
@@ -84,8 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             <button class="seta esquerda" onclick="scrollGaleria('evento-${index}', -1)">❮</button>
 
                             <div class="carrossel" id="evento-${index}">
-                                ${fotos.map(f => `<img src="${f}">`).join("")}
-                                ${videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
+                                ${ev.fotos.map(f => `<img src="${f}">`).join("")}
+                                ${ev.videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
                             </div>
 
                             <button class="seta direita" onclick="scrollGaleria('evento-${index}', 1)">❯</button>
@@ -97,14 +74,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ============================
-    // SETS (6 VISÍVEIS + SCROLL SUAVE)
-    // ============================
+    // SETS
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('sets');
-        if (!container) return;
 
         container.innerHTML = `
             <div class="carrossel-wrapper">
@@ -118,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p>${set.data}</p>
 
                             <audio controls>
-                                <source src="${set.audio}" type="audio/mpeg">
+                                <source src="${set.audio}">
                             </audio>
                         </div>
                     `).join("")}
@@ -132,26 +106,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// ============================
-// FUNÇÕES GLOBAIS
-// ============================
-
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
         content.style.display === "block" ? "none" : "block";
 }
 
-// 🔥 SCROLL AJUSTADO (EXATAMENTE 1 "PÁGINA" = 6 ITENS)
+// SCROLL 6 ITENS
 function scrollGaleria(id, direction) {
     const el = document.getElementById(id);
-    if (!el) return;
+    const item = el.querySelector('*');
 
-    const larguraItem = el.querySelector('*')?.offsetWidth || 250;
-    const scrollTotal = larguraItem * 6; // 👈 6 itens por vez
+    if (!item) return;
 
+    const largura = item.offsetWidth + 15;
     el.scrollBy({
-        left: direction * scrollTotal,
+        left: largura * 6 * direction,
         behavior: "smooth"
     });
 }
