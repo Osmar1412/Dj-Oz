@@ -71,3 +71,27 @@
 
 .esquerda { left: -60px; }
 .direita { right: -60px; }
+
+/* MANTIDO ORIGINAL + ADIÇÃO NO FINAL */
+
+.carrossel img,
+.carrossel iframe,
+.set-card {
+    box-shadow: 0 0 10px rgba(0,255,204,0.25);
+    transition: 0.3s;
+}
+
+.carrossel img:hover,
+.carrossel iframe:hover,
+.set-card:hover {
+    box-shadow: 0 0 20px #00ffcc;
+}
+
+.seta {
+    box-shadow: 0 0 10px #00ffcc;
+    transition: 0.3s;
+}
+
+.seta:hover {
+    box-shadow: 0 0 25px #00ffcc;
+}
