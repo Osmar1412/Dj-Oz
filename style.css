@@ -1,56 +1,87 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     background: #000;
     color: white;
-    text-align: center;
 }
 
-/* CENTRALIZAÇÃO GLOBAL */
-section {
-    max-width: 1200px;
-    margin: auto;
+/* HERO CENTRAL */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-/* LOGO */
 .logo-img {
-    width: 450px;
+    width: 280px;
+    margin-bottom: 20px;
 }
 
-/* TÍTULOS CLICÁVEIS */
-.titulo-click {
-    cursor: pointer;
-    transition: 0.3s;
+.descricao {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.titulo-click:hover {
+/* BOTÃO */
+.btn {
+    background: #00ffcc;
+    padding: 15px 30px;
+    border-radius: 30px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* MENU */
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 15px;
+    background: #111;
+}
+
+.menu a {
     color: #00ffcc;
+    text-decoration: none;
+}
+
+/* SECTIONS */
+section {
+    text-align: center;
+    padding: 50px 20px;
 }
 
 /* CARROSSEL */
 .carrossel-wrapper {
     position: relative;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .carrossel {
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    gap: 20px;
     overflow: hidden;
-    padding: 20px 60px;
 }
 
 .carrossel > * {
-    min-width: 200px;
+    min-width: calc(100% / 6);
 }
 
-/* MÍDIA */
+/* ITENS */
 .carrossel img,
 .carrossel iframe {
     width: 100%;
-    height: 150px;
+    height: 180px;
+    object-fit: cover;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,255,204,0.5);
 }
 
 /* SET CARD */
@@ -58,7 +89,18 @@ section {
     background: #111;
     padding: 15px;
     border-radius: 10px;
+    text-align: center;
     box-shadow: 0 0 15px rgba(0,255,204,0.3);
+}
+
+.set-card:hover {
+    box-shadow: 0 0 25px #00ffcc;
+}
+
+audio {
+    width: 100%;
+    margin-top: 10px;
+    filter: invert(1) hue-rotate(140deg);
 }
 
 /* SETAS PROFISSIONAIS */
@@ -66,30 +108,17 @@ section {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,255,204,0.15);
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
     width: 45px;
     height: 45px;
     border-radius: 50%;
+    border: 1px solid #00ffcc;
+    background: rgba(0,0,0,0.5);
+    color: #00ffcc;
     cursor: pointer;
-    backdrop-filter: blur(5px);
-    font-size: 22px;
 }
 
-.seta:hover {
-    background: #00ffcc;
-    color: black;
-}
-
-.esquerda { left: 10px; }
-.direita { right: 10px; }
-
-/* PLAYER */
-audio {
-    width: 100%;
-    filter: invert(1) hue-rotate(140deg);
-}
+.esquerda { left: -60px; }
+.direita { right: -60px; }
 
 /* FORM */
 .form-dj {
@@ -102,25 +131,34 @@ audio {
     margin: 20px 0;
 }
 
-input, textarea {
+.input-group input,
+.input-group textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #00ffcc;
     background: none;
+    border: 1px solid #00ffcc;
     color: white;
 }
 
-label {
+.input-group label {
     position: absolute;
     left: 10px;
     top: 10px;
     color: #00ffcc;
+    transition: 0.3s;
+}
+
+.input-group input:focus + label,
+.input-group textarea:focus + label {
+    top: -10px;
+    font-size: 12px;
 }
 
 .btn-enviar {
     width: 100%;
     padding: 15px;
     background: #00ffcc;
+    border: none;
 }
 
 /* WHATSAPP */
@@ -138,10 +176,26 @@ label {
 .footer {
     background: #111;
     padding: 30px;
+    text-align: center;
 }
 
 .footer-item {
     display: flex;
     justify-content: center;
     gap: 10px;
+    margin: 10px;
+}
+
+.footer-item img {
+    width: 20px;
+}
+
+.marca {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.copy {
+    font-size: 12px;
+    color: #aaa;
 }
