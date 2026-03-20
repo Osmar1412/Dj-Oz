@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // SETS
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -64,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     });
 
-    // EVENTOS
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -100,22 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-/* SCROLL PROFISSIONAL */
-function scrollGaleria(id, dir) {
-    const el = document.getElementById(id);
-    const item = el.children[0];
-
-    if (!item) return;
-
-    const itemWidth = item.offsetWidth + 20;
-    const scrollAmount = itemWidth * 6;
-
-    el.scrollBy({
-        left: dir * scrollAmount,
-        behavior: "smooth"
-    });
-}
-
 function toggle(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
@@ -124,4 +106,19 @@ function toggle(el) {
 function toggleSection(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
+}
+
+function scrollGaleria(id, dir) {
+    const el = document.getElementById(id);
+    const items = el.children;
+
+    if (!items.length) return;
+
+    const itemWidth = items[0].offsetWidth + 20;
+    const scrollAmount = itemWidth * 6;
+
+    el.scrollBy({
+        left: dir * scrollAmount,
+        behavior: "smooth"
+    });
 }
