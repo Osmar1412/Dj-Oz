@@ -16,13 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // CONTADOR (CORRIGIDO)
+    // CONTADOR
     // ============================
     const contador = document.getElementById("contador");
 
     let visitas = localStorage.getItem("visitasTotal") || 0;
 
-    // Só conta 1 vez por sessão (evita F5)
     if (!sessionStorage.getItem("visitou")) {
         visitas++;
         localStorage.setItem("visitasTotal", visitas);
@@ -30,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     contador.innerText = "👁️ Visitas: " + visitas;
-
 
     // ============================
     // FORMULÁRIO
@@ -57,27 +55,36 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // EVENTOS
+    // EVENTOS (CARROSSEL NOVO)
     // ============================
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('eventos');
 
-        data.eventos.forEach(ev => {
+        data.eventos.forEach((ev, index) => {
 
             let bloco = document.createElement('div');
             bloco.classList.add("evento");
 
             bloco.innerHTML = `
                 <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
+
                 <div class="conteudo">
-                    <div class="galeria">
-                        ${ev.fotos.map(f => `<img src="${f}">`).join("")}
+
+                    <div class="carrossel-wrapper">
+
+                        <button class="seta esquerda" onclick="scrollGaleria(${index}, -1)">❮</button>
+
+                        <div class="carrossel" id="galeria-${index}">
+                            ${ev.fotos.map(f => `<img src="${f}">`).join("")}
+                            ${ev.videos.map(v => `<iframe src="${v}" frameborder="0" allowfullscreen></iframe>`).join("")}
+                        </div>
+
+                        <button class="seta direita" onclick="scrollGaleria(${index}, 1)">❯</button>
+
                     </div>
-                    <div class="video">
-                        ${ev.videos.map(v => `<iframe src="${v}"></iframe>`).join("")}
-                    </div>
+
                 </div>
             `;
 
@@ -106,9 +113,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+// ============================
 // TOGGLE
+// ============================
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
         content.style.display === "block" ? "none" : "block";
+}
+
+// ============================
+// SCROLL GALERIA
+// ============================
+function scrollGaleria(index, direction) {
+    const galeria = document.getElementById(`galeria-${index}`);
+    galeria.scrollLeft += direction * 300;
 }
