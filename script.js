@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             <div class="carrossel" id="evento-${index}">
                                 ${ev.fotos.map(f => `<img src="${f}">`).join("")}
-                                ${ev.videos.map(v => `<iframe src="${v}" frameborder="0" allowfullscreen></iframe>`).join("")}
+                                ${ev.videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
                             </div>
 
                             <button class="seta direita" onclick="scrollGaleria('evento-${index}', 1)">❯</button>
@@ -100,12 +100,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// FUNÇÕES
+// TOGGLE GERAL
 function toggle(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
 }
 
+// TOGGLE SECTION
+function toggleSection(el) {
+    const c = el.nextElementSibling;
+    c.style.display = c.style.display === "block" ? "none" : "block";
+}
+
+// SCROLL
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
     const largura = el.offsetWidth;
