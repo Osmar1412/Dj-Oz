@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // SETS COM CAPA
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -52,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="carrossel" id="sets-carrossel">
                     ${data.sets.map(set => `
                         <div class="set-card">
+                            <img src="${set.capa}" class="set-capa">
                             <h3>${set.titulo}</h3>
                             <audio controls src="${set.audio}"></audio>
                         </div>
@@ -63,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     });
 
+    // EVENTOS
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -110,15 +113,13 @@ function toggleSection(el) {
 
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
-    const items = el.children;
+    const item = el.children[0];
 
-    if (!items.length) return;
+    if (!item) return;
 
-    const itemWidth = items[0].offsetWidth + 20;
-    const scrollAmount = itemWidth * 6;
-
+    const largura = item.offsetWidth + 20;
     el.scrollBy({
-        left: dir * scrollAmount,
+        left: dir * largura * 6,
         behavior: "smooth"
     });
 }
