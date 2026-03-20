@@ -13,30 +13,3 @@
   ]
 }
 
-{
-  "eventos": [
-    {
-      "titulo": "Casamento Ana & João",
-      "data": "10/03/2026",
-      "fotos": [
-        "imagens/evento1-foto1.jpg",
-        "imagens/evento1-foto2.jpg"
-      ],
-      "videos": [
-        "https://www.youtube.com/embed/exemploVideo1",
-        "https://www.youtube.com/embed/exemploVideo2"
-      ]
-    },
-    {
-      "titulo": "Festa Corporativa XYZ",
-      "data": "15/03/2026",
-      "fotos": [
-        "imagens/evento2-foto1.jpg",
-        "imagens/evento2-foto2.jpg"
-      ],
-      "videos": [
-        "https://www.youtube.com/embed/exemploVideo3"
-      ]
-    }
-  ]
-}
