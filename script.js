@@ -5,7 +5,9 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    // ============================
     // CONFIG
+    // ============================
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -13,7 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // CONTADOR
+    // ============================
+    // CONTADOR (SEM BUG)
+    // ============================
     let visitas = localStorage.getItem("visitasTotal") || 0;
 
     if (!sessionStorage.getItem("visitou")) {
@@ -24,7 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
-    // FORM
+    // ============================
+    // FORMULÁRIO (CORRIGIDO)
+    // ============================
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
@@ -34,9 +40,11 @@ document.addEventListener("DOMContentLoaded", function () {
         status.innerText = "📨 Enviando...";
 
         emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
-        .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
         .then(() => {
-            status.innerText = "✅ Pedido enviado!";
+            return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
+        })
+        .then(() => {
+            status.innerText = "✅ Pedido enviado com sucesso!";
             form.reset();
         })
         .catch(() => {
@@ -78,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // SETS (CARROSSEL PROFISSIONAL)
+    // SETS (CARROSSEL CORRIGIDO)
     // ============================
     fetch('sets.json')
     .then(res => res.json())
@@ -96,9 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <h3>${set.titulo}</h3>
                             <p>${set.data}</p>
 
-                            <div class="player">
-                                <audio controls src="${set.audio}"></audio>
-                            </div>
+                            <audio controls src="${set.audio}"></audio>
 
                             <div class="equalizer">
                                 <span></span><span></span><span></span>
@@ -115,15 +121,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// TOGGLE
+// ============================
+// FUNÇÕES
+// ============================
 function toggle(el) {
     const content = el.nextElementSibling;
     content.style.display =
         content.style.display === "block" ? "none" : "block";
 }
 
-// SCROLL
 function scrollGaleria(id, direction) {
     const el = document.getElementById(id);
-    el.scrollLeft += direction * 320;
+    el.scrollBy({
+        left: direction * 300,
+        behavior: "smooth"
+    });
 }
