@@ -1,11 +1,10 @@
-/* REMOVE QUALQUER SCROLL LATERAL */
 * {
     box-sizing: border-box;
 }
 
-html, body {
+body {
     margin: 0;
-    overflow-x: hidden; /* 🔥 resolve o balanço */
+    overflow-x: hidden;
     font-family: 'Poppins', sans-serif;
     background: #000;
     color: white;
@@ -35,6 +34,7 @@ nav {
 nav a {
     color: #00ffcc;
     margin: 10px;
+    text-decoration: none;
 }
 
 /* SEÇÕES */
@@ -47,84 +47,22 @@ section {
 .btn {
     background: #00ffcc;
     color: black;
-    padding: 15px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    text-decoration: none;
 }
 
-/* ============================
-   CARROSSEL
-============================ */
-
-.carrossel-wrapper {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
+/* CONTADOR */
+.contador-box {
+    margin-top: 10px;
 }
 
-.carrossel {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    padding: 20px;
-    scroll-behavior: smooth;
-}
-
-.carrossel::-webkit-scrollbar {
-    display: none;
-}
-
-/* ITENS */
-.carrossel img,
-.carrossel iframe {
-    width: 260px;
-    height: 160px;
-    border-radius: 10px;
-    flex-shrink: 0;
-}
-
-/* SETAS */
-.seta {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 45px;
-    height: 45px;
-    background: rgba(0,0,0,0.7);
+#contador {
     color: #00ffcc;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    opacity: 0;
-}
-
-.carrossel-wrapper:hover .seta {
-    opacity: 1;
-}
-
-.esquerda { left: 5px; }
-.direita { right: 5px; }
-
-/* SETS */
-.set-card {
-    min-width: 260px;
-    background: #111;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-/* FORM */
-.contato form {
-    max-width: 500px;
-    margin: auto;
-}
-
-input, textarea {
-    width: 100%;
-    margin: 10px;
-    padding: 10px;
 }
 
 /* ============================
-   WHATSAPP OFICIAL
+   WHATSAPP BONITO
 ============================ */
 
 .whatsapp {
@@ -140,19 +78,37 @@ input, textarea {
 }
 
 /* ============================
-   CONTADOR
+   SETS COM NEON 🔥
 ============================ */
 
-#contador {
+.set-card {
+    min-width: 260px;
+    background: #111;
+    padding: 15px;
+    border-radius: 10px;
+
+    box-shadow: 0 0 10px rgba(0,255,204,0.3);
+    transition: 0.3s;
+}
+
+.set-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #00ffcc;
+}
+
+audio {
+    width: 100%;
     margin-top: 10px;
-    color: #00ffcc;
+
+    filter: invert(1) hue-rotate(140deg);
+    box-shadow: 0 0 10px rgba(0,255,204,0.5);
 }
 
 /* ============================
-   FOOTER DJ PROFISSIONAL
+   FOOTER PROFISSIONAL
 ============================ */
 
-footer {
+.footer {
     background: #111;
     padding: 30px;
     text-align: center;
@@ -173,9 +129,9 @@ footer {
 
 .footer-item img {
     width: 20px;
-    filter: invert(1);
+    filter: brightness(0) invert(1);
 }
 
-.footer-item span {
-    color: #00ffcc;
+.footer p {
+    margin: 5px 0;
 }
