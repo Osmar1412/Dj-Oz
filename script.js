@@ -4,6 +4,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    // CONFIGURAÇÕES
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -11,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
+    // CONTADOR DE VISITAS
     let visitas = localStorage.getItem("visitasTotal") || 0;
     if (!sessionStorage.getItem("visitou")) {
         visitas++;
@@ -19,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
+    // FORMULÁRIO
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
-
     form.addEventListener("submit", function(e) {
         e.preventDefault();
         status.innerText = "📨 Enviando...";
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // SETS COM PLAYER SIMPLES
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -48,25 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="set-card">
                             <img src="${set.capa}" class="set-capa">
                             <h3>${set.titulo}</h3>
-                            <div class="dj-player">
-                                <audio controls src="${set.audio}"></audio>
-                                <div class="eq-bars">
-                                    ${Array(10).fill('<div class="bar"></div>').join('')}
-                                </div>
-                            </div>
+                            <audio controls src="${set.audio}"></audio>
                         </div>
                     `).join("")}
                 </div>
                 <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">❯</button>
             </div>
         `;
-        setInterval(() => {
-            document.querySelectorAll('.eq-bars .bar').forEach(bar => {
-                bar.style.height = Math.random() * 100 + '%';
-            });
-        }, 250);
     });
 
+    // EVENTOS
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
