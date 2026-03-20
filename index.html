@@ -16,7 +16,7 @@
 
 <header class="hero">
     <img id="logo" class="logo-img">
-    <p id="descricao"></p>
+    <p id="descricao" class="descricao"></p>
 
     <a href="https://wa.me/5511947865370" class="btn">Contratar Agora</a>
 
@@ -25,7 +25,7 @@
     </div>
 </header>
 
-<nav>
+<nav class="menu">
     <a href="#sobre">Sobre</a>
     <a href="#sets">Sets</a>
     <a href="#eventos">Eventos</a>
@@ -38,18 +38,15 @@
 </section>
 
 <section id="sets">
-    <h2 onclick="toggleSection('setsContent')" class="titulo-click">
-        🎧 Sets & Mixagens
-    </h2>
-
-    <div id="setsContent"></div>
+    <h2 onclick="toggleSection(this)">🎧 Sets & Mixagens</h2>
+    <div id="sets-container"></div>
 </section>
 
 <section id="eventos">
     <h2>Eventos</h2>
 </section>
 
-<section id="contato" class="contato">
+<section id="contato">
     <h2>Solicitar Orçamento</h2>
 
     <form id="formDJ" class="form-dj">
@@ -79,6 +76,7 @@
     <p id="statusEnvio"></p>
 </section>
 
+<!-- WHATSAPP -->
 <a href="https://wa.me/5511947865370" class="whatsapp" target="_blank">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
@@ -88,16 +86,16 @@
 
         <div class="footer-item">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-            <p>WhatsApp: (11) 94786-5370</p>
+            <p>(11) 94786-5370</p>
         </div>
 
         <div class="footer-item">
             <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
-            <p>Email: osmar.dj.oz@gmail.com</p>
+            <p>osmar.dj.oz@gmail.com</p>
         </div>
 
-        <p>🎧 DJ Oz Eventos</p>
-        <p>© 2026 Todos os direitos reservados</p>
+        <p class="marca">🎧 DJ Oz Eventos</p>
+        <p class="copy">© 2026 Todos os direitos reservados</p>
 
     </div>
 </footer>
