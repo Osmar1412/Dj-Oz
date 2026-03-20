@@ -5,7 +5,9 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // LOGO
+    // ============================
+    // CONFIG
+    // ============================
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -14,39 +16,57 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // CONTADOR PROFISSIONAL
+    // CONTADOR SIMPLES (SEM F5)
     // ============================
     const contador = document.getElementById("contador");
 
-    // chave única do visitante
-    let visitante = localStorage.getItem("visitante_id");
+    let visitas = localStorage.getItem("visitasTotal");
 
-    if (!visitante) {
-        visitante = Date.now() + Math.random();
-        localStorage.setItem("visitante_id", visitante);
-
-        // conta apenas novo visitante
-        fetch("https://api.countapi.xyz/hit/djoz/visitas")
-        .then(res => res.json())
-        .then(data => {
-            contador.innerText = "👁️ Visitas: " + data.value;
-        })
-        .catch(() => {
-            contador.innerText = "👁️ Visitas: --";
-        });
-
+    // Se nunca visitou
+    if (!visitas) {
+        visitas = 1;
+        localStorage.setItem("visitasTotal", visitas);
     } else {
-        // apenas consulta (não incrementa)
-        fetch("https://api.countapi.xyz/get/djoz/visitas")
-        .then(res => res.json())
-        .then(data => {
-            contador.innerText = "👁️ Visitas: " + data.value;
-        })
-        .catch(() => {
-            contador.innerText = "👁️ Visitas: --";
-        });
+        visitas = parseInt(visitas);
+
+        // Só incrementa se for NOVA VISITA REAL (não F5)
+        if (!sessionStorage.getItem("visitou")) {
+            visitas++;
+            localStorage.setItem("visitasTotal", visitas);
+            sessionStorage.setItem("visitou", "true");
+        }
     }
 
+    contador.innerText = "👁️ Visitas: " + visitas;
+
+    // ============================
+    // FORMULÁRIO EMAILJS
+    // ============================
+    const form = document.getElementById("formDJ");
+    const status = document.getElementById("statusEnvio");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        status.innerText = "📨 Enviando...";
+
+        // ENVIA PRA VOCÊ
+        emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
+        .then(() => {
+
+            // ENVIA RESPOSTA AUTOMÁTICA
+            return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
+
+        })
+        .then(() => {
+            status.innerText = "✅ Pedido enviado com sucesso!";
+            form.reset();
+        })
+        .catch((error) => {
+            status.innerText = "❌ Erro ao enviar.";
+            console.log(error);
+        });
+    });
 
     // ============================
     // EVENTOS
@@ -57,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const container = document.getElementById('eventos');
 
         data.eventos.forEach(ev => {
+
             let bloco = document.createElement('div');
             bloco.classList.add("evento");
 
@@ -65,9 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="conteudo">
                     <div class="galeria">
                         ${ev.fotos.map(f => `<img src="${f}">`).join("")}
-                    </div>
-                    <div class="video">
-                        ${ev.videos.map(v => `<iframe src="${v}"></iframe>`).join("")}
                     </div>
                 </div>
             `;
@@ -95,42 +113,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ============================
-    // FORM
-    // ============================
-    const form = document.getElementById("formDJ");
-    const status = document.getElementById("statusEnvio");
-
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
-
-        status.innerText = "📨 Enviando...";
-
-        const formData = {
-            name: form.name.value,
-            email: form.email.value,
-            whatsapp: form.whatsapp.value,
-            message: form.message.value
-        };
-
-        emailjs.send("service_5fpydfh", "template_esjbqjl", formData)
-        .then(() => {
-            return emailjs.send("service_5fpydfh", "template_2qmhd1v", formData);
-        })
-        .then(() => {
-            status.innerText = "✅ Pedido enviado com sucesso!";
-            form.reset();
-        })
-        .catch(() => {
-            status.innerText = "❌ Erro ao enviar.";
-        });
-    });
-
 });
 
 // TOGGLE
 function toggle(el) {
     const content = el.nextElementSibling;
-    content.style.display =
-        content.style.display === "block" ? "none" : "block";
+    content.style.display = content.style.display === "block" ? "none" : "block";
 }
