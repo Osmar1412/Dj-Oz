@@ -4,7 +4,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // CONFIGURAÇÕES
+    // CONFIG
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // CONTADOR DE VISITAS
+    // CONTADOR
     let visitas = localStorage.getItem("visitasTotal") || 0;
     if (!sessionStorage.getItem("visitou")) {
         visitas++;
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // SETS COM PLAYER SIMPLES
+    // SETS - PLAYER SIMPLES
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="carrossel" id="sets-carrossel">
                     ${data.sets.map(set => `
                         <div class="set-card">
-                            <img src="${set.capa}" class="set-capa">
                             <h3>${set.titulo}</h3>
                             <audio controls src="${set.audio}"></audio>
                         </div>
@@ -65,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(data => {
         const container = document.getElementById('eventos');
-        data.eventos.forEach((ev, index) => {
+        data.eventos.forEach((ev,index) => {
             container.innerHTML += `
                 <div class="evento">
                     <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
