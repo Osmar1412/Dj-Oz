@@ -4,6 +4,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    // CONFIGURAÇÃO
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -11,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
+    // CONTADOR DE VISITAS
     let visitas = localStorage.getItem("visitasTotal") || 0;
     if (!sessionStorage.getItem("visitou")) {
         visitas++;
@@ -19,13 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
+    // FORMULÁRIO
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
     form.addEventListener("submit", function(e) {
         e.preventDefault();
         status.innerText = "📨 Enviando...";
-
         emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
         .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
         .then(() => {
@@ -37,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Sets com players estilo DJ Equalizador
+    // SETS com players simplificados e equalizador animado
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -50,11 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="set-card">
                             <img src="${set.capa}" class="set-capa">
                             <h3>${set.titulo}</h3>
-                            <div class="player-eq">
-                                <audio src="${set.audio}" controls></audio>
-                                <div class="eq-bars">
-                                    ${Array(8).fill('<div class="bar"></div>').join('')}
-                                </div>
+                            <audio controls src="${set.audio}" class="audio-simple"></audio>
+                            <div class="eq-bars">
+                                ${Array(8).fill('<div class="bar"></div>').join('')}
                             </div>
                         </div>
                     `).join("")}
@@ -63,15 +63,15 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
 
-        // Animar barras
+        // Animação das barras
         setInterval(() => {
-            document.querySelectorAll('.player-eq .bar').forEach(bar => {
+            document.querySelectorAll('.eq-bars .bar').forEach(bar => {
                 bar.style.height = Math.random() * 100 + '%';
             });
         }, 250);
     });
 
-    // Eventos
+    // EVENTOS
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -104,12 +104,10 @@ function toggle(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
 }
-
 function toggleSection(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
 }
-
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
     if (!el) return;
