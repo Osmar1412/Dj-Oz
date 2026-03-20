@@ -48,9 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             status.innerText = "📨 Enviando...";
 
             emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
-            .then(() => {
-                return emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form);
-            })
+            .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
             .then(() => {
                 status.innerText = "✅ Pedido enviado com sucesso!";
                 form.reset();
@@ -63,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ============================
-    // EVENTOS (COM CARROSSEL)
+    // EVENTOS (6 VISÍVEIS + CARROSSEL)
     // ============================
     fetch('eventos.json')
     .then(res => res.json())
@@ -72,6 +70,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!container) return;
 
         data.eventos.forEach((ev, index) => {
+
+            const fotos = ev.fotos || [];
+            const videos = ev.videos || [];
+
             container.innerHTML += `
                 <div class="evento">
                     <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
@@ -82,8 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             <button class="seta esquerda" onclick="scrollGaleria('evento-${index}', -1)">❮</button>
 
                             <div class="carrossel" id="evento-${index}">
-                                ${ev.fotos.map(f => `<img src="${f}">`).join("")}
-                                ${ev.videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
+                                ${fotos.map(f => `<img src="${f}">`).join("")}
+                                ${videos.map(v => `<iframe src="${v}" allowfullscreen></iframe>`).join("")}
                             </div>
 
                             <button class="seta direita" onclick="scrollGaleria('evento-${index}', 1)">❯</button>
@@ -96,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ============================
-    // SETS (COM NEON GARANTIDO)
+    // SETS (6 VISÍVEIS + SCROLL SUAVE)
     // ============================
     fetch('sets.json')
     .then(res => res.json())
@@ -118,7 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             <audio controls>
                                 <source src="${set.audio}" type="audio/mpeg">
                             </audio>
-
                         </div>
                     `).join("")}
                 </div>
@@ -141,13 +142,16 @@ function toggle(el) {
         content.style.display === "block" ? "none" : "block";
 }
 
+// 🔥 SCROLL AJUSTADO (EXATAMENTE 1 "PÁGINA" = 6 ITENS)
 function scrollGaleria(id, direction) {
     const el = document.getElementById(id);
-
     if (!el) return;
 
+    const larguraItem = el.querySelector('*')?.offsetWidth || 250;
+    const scrollTotal = larguraItem * 6; // 👈 6 itens por vez
+
     el.scrollBy({
-        left: direction * 300,
+        left: direction * scrollTotal,
         behavior: "smooth"
     });
 }
