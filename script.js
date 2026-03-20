@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // SETS
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -48,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         container.innerHTML = `
             <div class="carrossel-wrapper">
                 <button class="seta esquerda" onclick="scrollGaleria('sets-carrossel', -1)">❮</button>
+
                 <div class="carrossel" id="sets-carrossel">
                     ${data.sets.map(set => `
                         <div class="set-card">
@@ -56,11 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     `).join("")}
                 </div>
+
                 <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">❯</button>
             </div>
         `;
     });
 
+    // EVENTOS
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -73,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     <div class="conteudo">
                         <h4 onclick="toggle(this)">📸 Mídias</h4>
+
                         <div class="conteudo">
                             <div class="carrossel-wrapper">
 
@@ -95,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+// TOGGLES (INALTERADOS)
 function toggle(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
@@ -105,8 +111,18 @@ function toggleSection(el) {
     c.style.display = c.style.display === "block" ? "none" : "block";
 }
 
+// SCROLL INTELIGENTE (AJUSTADO)
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
-    const largura = el.offsetWidth;
-    el.scrollBy({ left: dir * largura, behavior: "smooth" });
+    const item = el.querySelector(':scope > *');
+
+    if (!item) return;
+
+    const itemWidth = item.offsetWidth + 20; // inclui gap
+    const scrollAmount = itemWidth * 6; // 6 itens por página
+
+    el.scrollBy({
+        left: dir * scrollAmount,
+        behavior: "smooth"
+    });
 }
