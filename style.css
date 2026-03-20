@@ -1,57 +1,64 @@
 body {
     margin: 0;
-    overflow-x: hidden;
     font-family: 'Poppins', sans-serif;
     background: #000;
     color: white;
+    text-align: center;
 }
 
-/* HERO */
-.hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+/* CENTRALIZAÇÃO GLOBAL */
+section {
+    max-width: 1200px;
+    margin: auto;
 }
 
-/* LOGO GRANDE */
+/* LOGO */
 .logo-img {
-    width: 500px;
-    max-width: 90%;
+    width: 450px;
 }
 
-/* BOTÃO */
-.btn {
-    background: #00ffcc;
-    color: black;
-    padding: 15px 25px;
+/* TÍTULOS CLICÁVEIS */
+.titulo-click {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.titulo-click:hover {
+    color: #00ffcc;
 }
 
 /* CARROSSEL */
 .carrossel-wrapper {
     position: relative;
-    width: 100%;
 }
 
 .carrossel {
     display: flex;
+    justify-content: center;
     gap: 15px;
     overflow: hidden;
     padding: 20px 60px;
 }
 
 .carrossel > * {
-    min-width: 220px;
+    min-width: 200px;
 }
 
-/* MÍDIAS */
+/* MÍDIA */
 .carrossel img,
 .carrossel iframe {
     width: 100%;
     height: 150px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,255,204,0.5);
+    box-shadow: 0 0 20px rgba(0,255,204,0.5);
+}
+
+/* SET CARD */
+.set-card {
+    background: #111;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,255,204,0.3);
 }
 
 /* SETAS PROFISSIONAIS */
@@ -59,36 +66,28 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    background: rgba(0,255,204,0.15);
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    border: none;
-    background: rgba(0,255,204,0.9);
     cursor: pointer;
-    z-index: 10;
-    font-size: 20px;
+    backdrop-filter: blur(5px);
+    font-size: 22px;
+}
+
+.seta:hover {
+    background: #00ffcc;
+    color: black;
 }
 
 .esquerda { left: 10px; }
 .direita { right: 10px; }
 
-/* SET CARD */
-.set-card {
-    background: #111;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 15px rgba(0,255,204,0.3);
-}
-
-.set-card:hover {
-    box-shadow: 0 0 30px #00ffcc;
-}
-
-/* PLAYER NEON */
+/* PLAYER */
 audio {
     width: 100%;
-    margin-top: 10px;
     filter: invert(1) hue-rotate(140deg);
 }
 
@@ -103,8 +102,7 @@ audio {
     margin: 20px 0;
 }
 
-.input-group input,
-.input-group textarea {
+input, textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #00ffcc;
@@ -112,7 +110,7 @@ audio {
     color: white;
 }
 
-.input-group label {
+label {
     position: absolute;
     left: 10px;
     top: 10px;
@@ -140,16 +138,10 @@ audio {
 .footer {
     background: #111;
     padding: 30px;
-    text-align: center;
 }
 
 .footer-item {
     display: flex;
     justify-content: center;
     gap: 10px;
-}
-
-.footer-item img {
-    width: 20px;
-    filter: invert(1);
 }
