@@ -3,7 +3,7 @@ body { font-family:'Poppins', sans-serif; background:#000; color:white; }
 
 /* HERO */
 .hero { height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-.logo-img { width:440px; margin-bottom:20px; } /* logo maior */
+.logo-img { width:440px; margin-bottom:20px; }
 .descricao { text-align:center; margin-bottom:20px; color:#00ffcc; font-weight:500; font-size:20px; }
 
 /* BOTÃO */
@@ -12,13 +12,12 @@ body { font-family:'Poppins', sans-serif; background:#000; color:white; }
 
 /* MENU */
 .menu { display:flex; justify-content:center; gap:50px; padding:18px; background:#111; }
-.menu a { color:#00ffcc; text-decoration:none; font-size:20px; } 
+.menu a { color:#00ffcc; text-decoration:none; font-size:20px; }
 .menu a:hover { text-shadow:0 0 10px #00ffcc; }
 
 /* SECTIONS */
 section { text-align:center; padding:60px 20px; }
 h2 { font-family:'Orbitron', sans-serif; font-size:34px; cursor:pointer; margin-bottom:20px; }
-
 .sobre-texto { max-width:650px; margin:auto; font-size:18px; line-height:1.7; color:#ddd; }
 .conteudo { display:none; }
 
@@ -29,7 +28,6 @@ h2 { font-family:'Orbitron', sans-serif; font-size:34px; cursor:pointer; margin-
 
 .set-card { background:#111; padding:10px; border-radius:10px; text-align:center; box-shadow:0 0 10px rgba(0,255,204,0.3); transition:0.3s; }
 .set-card:hover { transform:scale(1.05); box-shadow:0 0 25px #00ffcc; }
-.set-capa { width:100%; aspect-ratio:1/1; object-fit:cover; margin-bottom:10px; }
 audio { width:100%; border-radius:5px; background:#222; margin-top:5px; }
 
 /* SETAS */
