@@ -9,7 +9,7 @@ body {
     color: white;
 }
 
-/* HERO CENTRAL */
+/* HERO */
 .hero {
     height: 100vh;
     display: flex;
@@ -18,14 +18,23 @@ body {
     justify-content: center;
 }
 
+/* LOGO MELHORADO */
 .logo-img {
-    width: 280px;
-    margin-bottom: 20px;
+    width: 380px;
+    max-width: 80%;
+    margin-bottom: 25px;
+    transition: 0.3s;
 }
 
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+/* DESCRIÇÃO */
 .descricao {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 18px;
 }
 
 /* BOTÃO */
@@ -58,7 +67,7 @@ section {
     padding: 50px 20px;
 }
 
-/* CARROSSEL */
+/* CARROSSEL AJUSTADO */
 .carrossel-wrapper {
     position: relative;
     max-width: 1200px;
@@ -67,19 +76,20 @@ section {
 
 .carrossel {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     overflow: hidden;
 }
 
+/* 6 ITENS POR TELA */
 .carrossel > * {
-    min-width: calc(100% / 6);
+    flex: 0 0 calc(100% / 6 - 10px);
 }
 
 /* ITENS */
 .carrossel img,
 .carrossel iframe {
     width: 100%;
-    height: 180px;
+    height: 160px;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -103,7 +113,7 @@ audio {
     filter: invert(1) hue-rotate(140deg);
 }
 
-/* SETAS PROFISSIONAIS */
+/* SETAS */
 .seta {
     position: absolute;
     top: 50%;
@@ -184,6 +194,12 @@ audio {
     justify-content: center;
     gap: 10px;
     margin: 10px;
+}
+
+/* GMAIL AJUSTADO */
+.gmail-icon {
+    width: 22px;
+    filter: brightness(0) invert(1);
 }
 
 .footer-item img {
