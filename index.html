@@ -20,7 +20,6 @@
 
     <a href="https://wa.me/5511947865370" class="btn">Contratar Agora</a>
 
-    <!-- CONTADOR -->
     <div class="contador-box">
         <span id="contador">👁️ Carregando...</span>
     </div>
@@ -47,26 +46,42 @@
 </section>
 
 <section id="contato" class="contato">
-    <h2>Contratar DJ</h2>
+    <h2>Solicitar Orçamento</h2>
 
-    <form id="formDJ">
-        <input type="text" name="name" placeholder="Seu nome" required>
-        <input type="email" name="email" placeholder="Seu email" required>
-        <input type="tel" name="whatsapp" placeholder="Seu WhatsApp" required>
-        <textarea name="message" placeholder="Detalhes do evento" required></textarea>
+    <form id="formDJ" class="form-dj">
 
-        <button type="submit">Enviar</button>
+        <div class="input-group">
+            <input type="text" name="name" required>
+            <label>Nome</label>
+        </div>
+
+        <div class="input-group">
+            <input type="email" name="email" required>
+            <label>Email</label>
+        </div>
+
+        <div class="input-group">
+            <input type="tel" name="whatsapp" required>
+            <label>WhatsApp</label>
+        </div>
+
+        <div class="input-group">
+            <textarea name="message" required></textarea>
+            <label>Detalhes do evento</label>
+        </div>
+
+        <button type="submit" class="btn-enviar">Enviar Pedido</button>
+
     </form>
 
     <p id="statusEnvio"></p>
 </section>
 
-<!-- ✅ WHATSAPP OFICIAL (CORRIGIDO) -->
+<!-- WHATSAPP -->
 <a href="https://wa.me/5511947865370" class="whatsapp" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 </a>
 
-<!-- ✅ RODAPÉ MELHORADO (SEM REMOVER NADA) -->
 <footer class="footer">
     <div class="footer-content">
 
