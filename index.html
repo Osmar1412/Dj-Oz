@@ -3,28 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DJ Oz</title>
+<title>DJ Oz | Eventos e Experiências</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 </head>
 
 <body>
 
+<!-- HERO -->
 <header class="hero">
-    <img id="logo" class="logo-img">
-    <p id="descricao" class="descricao"></p>
+    <div class="hero-overlay"></div>
 
-    <a href="https://wa.me/5511947865370" class="btn">Contratar Agora</a>
+    <img id="logo" class="logo-img" alt="DJ Oz Logo">
+
+    <p id="descricao" class="descricao destaque"></p>
+
+    <a href="https://wa.me/5511947865370" class="btn destaque-btn">
+        🎧 Contratar Agora
+    </a>
 
     <div class="contador-box">
         <span id="contador">👁️ Carregando...</span>
     </div>
 </header>
 
+<!-- MENU -->
 <nav class="menu">
     <a href="#sobre">Sobre</a>
     <a href="#sets">Sets</a>
@@ -32,26 +39,36 @@
     <a href="#contato">Contato</a>
 </nav>
 
+<!-- SOBRE -->
 <section id="sobre">
     <h2 onclick="toggleSection(this)">Sobre</h2>
+
     <div class="conteudo">
         <p class="sobre-texto">
-            DJ profissional especializado em criar experiências únicas e memoráveis. 
-            Com mixagens envolventes e leitura de pista precisa, transforma qualquer evento 
-            em um momento inesquecível — seja festa, casamento ou evento corporativo.
+            Mais do que música, uma experiência completa. 🎧🔥<br><br>
+            DJ Oz transforma eventos em momentos inesquecíveis com mixagens envolventes,
+            leitura de pista precisa e energia que contagia o público.<br><br>
+            Especialista em casamentos, festas e eventos corporativos,
+            garantindo pista cheia e público animado do início ao fim.
         </p>
     </div>
 </section>
 
+<!-- SETS -->
 <section id="sets">
     <h2 onclick="toggleSection(this)">🎧 Sets & Mixagens</h2>
-    <div id="sets-container" class="conteudo"></div>
+
+    <div id="sets-container" class="conteudo">
+        <!-- preenchido via JS -->
+    </div>
 </section>
 
+<!-- EVENTOS -->
 <section id="eventos">
     <h2 onclick="toggleSection(this)">Eventos</h2>
 </section>
 
+<!-- CONTATO -->
 <section id="contato">
     <h2>Solicitar Orçamento</h2>
 
@@ -76,26 +93,30 @@
             <label>Detalhes do evento</label>
         </div>
 
-        <button type="submit" class="btn-enviar">Enviar Pedido</button>
+        <button type="submit" class="btn-enviar">
+            Enviar Pedido
+        </button>
     </form>
 
     <p id="statusEnvio"></p>
 </section>
 
+<!-- BOTÃO WHATSAPP FIXO -->
 <a href="https://wa.me/5511947865370" class="whatsapp" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
 </a>
 
+<!-- FOOTER (MANTIDO PERFEITO) -->
 <footer class="footer">
     <div class="footer-content">
 
         <div class="footer-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
             <p>(11) 94786-5370</p>
         </div>
 
         <div class="footer-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Email">
             <p>osmar.dj.oz@gmail.com</p>
         </div>
 
