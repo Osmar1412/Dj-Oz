@@ -19,93 +19,134 @@ body {
     justify-content: center;
 }
 
-/* LOGO */
-.logo-img {
-    width: 200px;
-}
-
-/* MENU */
-nav {
-    background: #111;
-    text-align: center;
-    padding: 15px;
-}
-
-nav a {
-    color: #00ffcc;
-    margin: 10px;
-    text-decoration: none;
-}
-
-/* SEÇÕES */
-section {
-    padding: 50px;
-    text-align: center;
-}
-
 /* BOTÃO */
 .btn {
     background: #00ffcc;
     color: black;
     padding: 15px 25px;
-    border-radius: 5px;
     text-decoration: none;
 }
 
-/* CONTADOR */
-.contador-box {
-    margin-top: 10px;
+/* ============================
+   CARROSSEL 6 ITENS
+============================ */
+
+.carrossel {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 20px;
 }
 
-#contador {
-    color: #00ffcc;
+.carrossel > * {
+    min-width: calc(100% / 6);
+}
+
+.carrossel img,
+.carrossel iframe {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+}
+
+/* SETAS */
+.seta {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #00ffcc;
+    color: black;
+    border: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.esquerda { left: 0; }
+.direita { right: 0; }
+
+/* ============================
+   SETS
+============================ */
+
+.set-card {
+    background: #111;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+
+    box-shadow: 0 0 10px rgba(0,255,204,0.3);
+}
+
+.set-card:hover {
+    box-shadow: 0 0 25px #00ffcc;
+}
+
+audio {
+    width: 100%;
+    filter: invert(1) hue-rotate(140deg);
 }
 
 /* ============================
-   WHATSAPP BONITO
+   FORM DJ PROFISSIONAL
+============================ */
+
+.form-dj {
+    max-width: 500px;
+    margin: auto;
+}
+
+.input-group {
+    position: relative;
+    margin: 20px 0;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: 1px solid #00ffcc;
+    color: white;
+}
+
+.input-group label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #00ffcc;
+    transition: 0.3s;
+}
+
+.input-group input:focus + label,
+.input-group textarea:focus + label {
+    top: -10px;
+    font-size: 12px;
+}
+
+.btn-enviar {
+    width: 100%;
+    padding: 15px;
+    background: #00ffcc;
+    border: none;
+}
+
+/* ============================
+   WHATSAPP
 ============================ */
 
 .whatsapp {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 999;
 }
 
 .whatsapp img {
     width: 60px;
-    height: 60px;
 }
 
 /* ============================
-   SETS COM NEON 🔥
-============================ */
-
-.set-card {
-    min-width: 260px;
-    background: #111;
-    padding: 15px;
-    border-radius: 10px;
-
-    box-shadow: 0 0 10px rgba(0,255,204,0.3);
-    transition: 0.3s;
-}
-
-.set-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px #00ffcc;
-}
-
-audio {
-    width: 100%;
-    margin-top: 10px;
-
-    filter: invert(1) hue-rotate(140deg);
-    box-shadow: 0 0 10px rgba(0,255,204,0.5);
-}
-
-/* ============================
-   FOOTER PROFISSIONAL
+   FOOTER
 ============================ */
 
 .footer {
@@ -114,24 +155,13 @@ audio {
     text-align: center;
 }
 
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
 .footer-item {
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: 10px;
 }
 
 .footer-item img {
     width: 20px;
-    filter: brightness(0) invert(1);
-}
-
-.footer p {
-    margin: 5px 0;
+    filter: invert(1);
 }
