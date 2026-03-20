@@ -38,7 +38,6 @@ body {
     font-weight: bold;
     transition: 0.3s;
 }
-
 .btn:hover { transform: scale(1.05); }
 
 /* MENU */
@@ -49,24 +48,16 @@ body {
     padding: 18px;
     background: #111;
 }
-
 .menu a {
     color: #00ffcc;
     text-decoration: none;
     font-size: 18px;
 }
-
 .menu a:hover { text-shadow: 0 0 10px #00ffcc; }
 
 /* SECTIONS */
 section { text-align: center; padding: 60px 20px; }
-
-h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 28px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
+h2 { font-family: 'Orbitron', sans-serif; font-size: 28px; cursor: pointer; margin-bottom: 20px; }
 
 .sobre-texto {
     max-width: 650px;
@@ -75,7 +66,6 @@ h2 {
     line-height: 1.7;
     color: #ddd;
 }
-
 .conteudo { display: none; }
 
 /* CARROSSEL */
@@ -84,12 +74,7 @@ h2 {
 .carrossel > * { min-width: calc(100% / 6); }
 
 .carrossel img,
-.carrossel iframe {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    border-radius: 10px;
-}
+.carrossel iframe { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; }
 
 /* SET CARD */
 .set-card {
@@ -100,10 +85,18 @@ h2 {
     box-shadow: 0 0 10px rgba(0,255,204,0.3);
     transition: 0.3s;
 }
-
 .set-card:hover { transform: scale(1.05); box-shadow: 0 0 25px #00ffcc; }
 
 .set-capa { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 10px; }
+
+/* PLAYER DJ */
+.player-dj audio {
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    background: #222;
+    box-shadow: 0 0 10px #00ffcc inset;
+}
 
 /* SETAS */
 .seta {
@@ -120,7 +113,6 @@ h2 {
     box-shadow: 0 0 10px #00ffcc;
     transition: 0.3s;
 }
-
 .seta:hover { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 30px #00ffcc; }
 
 .esquerda { left: -60px; }
