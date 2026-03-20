@@ -212,3 +212,56 @@ button {
     height: 28px;
     filter: invert(1);
 }
+
+/* ============================
+   CARROSSEL PROFISSIONAL
+============================ */
+
+.carrossel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.carrossel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 15px;
+    padding: 20px;
+}
+
+/* Esconde barra */
+.carrossel::-webkit-scrollbar {
+    display: none;
+}
+
+/* ITENS (LIMITA VISUAL) */
+.carrossel img,
+.carrossel iframe {
+    width: 250px;
+    height: 160px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+/* SETAS */
+.seta {
+    position: absolute;
+    background: rgba(0,0,0,0.7);
+    color: #00ffcc;
+    border: none;
+    font-size: 25px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+.esquerda {
+    left: 5px;
+}
+
+.direita {
+    right: 5px;
+}
