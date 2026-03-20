@@ -95,3 +95,23 @@
 .seta:hover {
     box-shadow: 0 0 25px #00ffcc;
 }
+
+/* SUAVIZAÇÃO GERAL */
+.carrossel > * {
+    transition: transform 0.3s ease, box-shadow 0.3s;
+}
+
+/* FOCO CENTRAL MAIS BONITO */
+.carrossel > *:hover {
+    transform: scale(1.08);
+}
+
+/* SCROLL MAIS FLUIDO */
+.carrossel {
+    scroll-behavior: smooth;
+    cursor: grab;
+}
+
+.carrossel:active {
+    cursor: grabbing;
+}
