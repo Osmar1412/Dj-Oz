@@ -4,7 +4,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // CONFIG
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
@@ -12,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('descricao').innerText = data.descricao;
     });
 
-    // CONTADOR
     let visitas = localStorage.getItem("visitasTotal") || 0;
 
     if (!sessionStorage.getItem("visitou")) {
@@ -23,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("contador").innerText = "👁️ Visitas: " + visitas;
 
-    // FORM
     const form = document.getElementById("formDJ");
     const status = document.getElementById("statusEnvio");
 
@@ -43,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // SETS
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -51,26 +47,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         container.innerHTML = `
             <div class="carrossel-wrapper">
-
                 <button class="seta esquerda" onclick="scrollGaleria('sets-carrossel', -1)">❮</button>
-
                 <div class="carrossel" id="sets-carrossel">
                     ${data.sets.map(set => `
                         <div class="set-card">
                             <h3>${set.titulo}</h3>
-                            <p>${set.data}</p>
                             <audio controls src="${set.audio}"></audio>
                         </div>
                     `).join("")}
                 </div>
-
                 <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">❯</button>
-
             </div>
         `;
     });
 
-    // EVENTOS
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
@@ -82,9 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <h3 onclick="toggle(this)">${ev.titulo} - ${ev.data}</h3>
 
                     <div class="conteudo">
-
-                        <h4 onclick="toggle(this)">Mídias</h4>
-
+                        <h4 onclick="toggle(this)">📸 Mídias</h4>
                         <div class="conteudo">
                             <div class="carrossel-wrapper">
 
@@ -99,7 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             </div>
                         </div>
-
                     </div>
                 </div>
             `;
@@ -108,19 +95,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-// FUNÇÃO TOGGLE (eventos internos)
 function toggle(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
 }
 
-// FUNÇÃO TOGGLE SECTION (SETS E EVENTOS)
 function toggleSection(el) {
     const c = el.nextElementSibling;
     c.style.display = c.style.display === "block" ? "none" : "block";
 }
 
-// SCROLL CARROSSEL
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
     const largura = el.offsetWidth;
