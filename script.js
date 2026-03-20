@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const container = document.getElementById('eventos');
 
         data.eventos.forEach(ev => {
+
             let bloco = document.createElement('div');
             bloco.classList.add("evento");
 
@@ -73,6 +74,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="conteudo">
                     <div class="galeria">
                         ${ev.fotos.map(f => `<img src="${f}">`).join("")}
+                    </div>
+                    <div class="video">
+                        ${ev.videos.map(v => `<iframe src="${v}"></iframe>`).join("")}
                     </div>
                 </div>
             `;
