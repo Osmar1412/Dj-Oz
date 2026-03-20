@@ -20,22 +20,15 @@ body {
     overflow: hidden;
 }
 
-/* OVERLAY PREMIUM */
 .hero-overlay {
     position: absolute;
     width: 100%;
     height: 100%;
     background: radial-gradient(circle, rgba(0,255,204,0.12), transparent 70%);
-    z-index: 0;
-}
-
-.hero * {
-    position: relative;
-    z-index: 1;
 }
 
 .logo-img {
-    width: 400px;
+    width: 380px;
     margin-bottom: 20px;
     filter: drop-shadow(0 0 10px rgba(0,255,204,0.5));
 }
@@ -45,7 +38,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* TEXTO DESTAQUE */
+/* DESTAQUE */
 .destaque {
     font-size: 20px;
     color: #00ffcc;
@@ -67,7 +60,6 @@ body {
     transform: scale(1.05);
 }
 
-/* BOTÃO PREMIUM */
 .destaque-btn {
     box-shadow: 0 0 10px #00ffcc;
 }
@@ -89,7 +81,6 @@ body {
     color: #00ffcc;
     text-decoration: none;
     font-size: 18px;
-    font-weight: 500;
     letter-spacing: 1px;
     transition: 0.3s;
 }
@@ -127,7 +118,7 @@ h2:hover {
     color: #ddd;
 }
 
-/* CONTEUDO OCULTO */
+/* CONTEUDO */
 .conteudo {
     display: none;
 }
@@ -146,17 +137,17 @@ h2:hover {
     scroll-behavior: smooth;
 }
 
-/* 6 ITENS */
+/* 6 ITENS PROPORCIONAIS */
 .carrossel > * {
     min-width: calc(100% / 6);
-    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* MIDIAS */
+/* PROPORÇÃO CORRETA (CORREÇÃO PRINCIPAL) */
 .carrossel img,
 .carrossel iframe {
     width: 100%;
-    height: 180px;
+    aspect-ratio: 16 / 9;
+    height: auto;
     object-fit: cover;
     border-radius: 10px;
 
@@ -177,6 +168,10 @@ h2:hover {
     border-radius: 10px;
     text-align: center;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     box-shadow: 0 0 10px rgba(0,255,204,0.3);
     transition: 0.3s;
 }
@@ -192,7 +187,7 @@ audio {
     filter: invert(1) hue-rotate(140deg);
 }
 
-/* SETAS */
+/* SETAS COM NEON */
 .seta {
     position: absolute;
     top: 50%;
@@ -260,14 +255,13 @@ audio {
     border: none;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .btn-enviar:hover {
     box-shadow: 0 0 20px #00ffcc;
 }
 
-/* WHATSAPP FLOAT */
+/* WHATSAPP */
 .whatsapp {
     position: fixed;
     bottom: 20px;
@@ -278,7 +272,7 @@ audio {
     width: 60px;
 }
 
-/* FOOTER (MANTIDO + MELHORADO) */
+/* FOOTER */
 .footer {
     background: #111;
     padding: 30px;
@@ -292,10 +286,8 @@ audio {
     margin: 10px;
 }
 
-/* ICONES PADRONIZADOS + NEON */
 .footer-item img {
     width: 22px;
-    height: auto;
     aspect-ratio: 1/1;
     object-fit: contain;
 
@@ -304,8 +296,8 @@ audio {
 }
 
 .footer-item img:hover {
-    filter: drop-shadow(0 0 6px #00ffcc) drop-shadow(0 0 14px #00ffcc);
     transform: scale(1.1);
+    filter: drop-shadow(0 0 6px #00ffcc) drop-shadow(0 0 14px #00ffcc);
 }
 
 .marca {
