@@ -309,3 +309,43 @@ audio {
     font-size: 12px;
     color: #aaa;
 }
+
+/* CAPA DOS SETS */
+.set-capa {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+    box-shadow: 0 0 10px rgba(0,255,204,0.4);
+}
+
+/* CARROSSEL 6 ITENS */
+.carrossel > * {
+    min-width: calc(100% / 6);
+}
+
+/* PROPORÇÃO MIDIA */
+.carrossel img,
+.carrossel iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+/* SET CARD */
+.set-card {
+    background: #111;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+
+    box-shadow: 0 0 10px rgba(0,255,204,0.3);
+    transition: 0.3s;
+}
+
+.set-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #00ffcc;
+}
