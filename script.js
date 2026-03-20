@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // SETS com player visual de DJ
     fetch('sets.json')
     .then(res => res.json())
     .then(data => {
@@ -61,8 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 <button class="seta direita" onclick="scrollGaleria('sets-carrossel', 1)">❯</button>
             </div>
         `;
-
-        // Equalizador animado
         setInterval(() => {
             document.querySelectorAll('.eq-bars .bar').forEach(bar => {
                 bar.style.height = Math.random() * 100 + '%';
@@ -70,7 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 250);
     });
 
-    // EVENTOS
     fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
