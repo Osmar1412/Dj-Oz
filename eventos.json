@@ -3,9 +3,12 @@
     {
       "titulo": "Aniversário da Gisele",
       "data": "14/03/2026",
-      "fotos": [
-        "imagens/FT-01.jpg","imagens/FT-02.jpg
-      ],
+      "fotos": {
+  "pasta": "imagens/",
+  "prefixo": "FT-",
+  "quantidade": 10,
+  "ext": "jpg"
+}
       "videos": [
         "videos/WhatsApp Video 2026-03-20 at 08.00.53.mp4"
       ]
