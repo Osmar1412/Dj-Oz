@@ -7,24 +7,26 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(res => res.json())
     .then(data => {
         const logo = document.getElementById('logo');
-        if (logo && data.logo) logo.src = data.logo;
+        if (logo && data.logo) {
+            logo.src = data.logo;
+        }
     })
-    .catch(() => console.warn("Erro ao carregar config.json"));
+    .catch(() => console.warn("Erro no config.json"));
 
 
 
     // ============================
-    // GERADOR DE FOTOS AUTOMÁTICAS
+    // GERAR FOTOS AUTOMÁTICAS
     // ============================
-    function gerarFotos(config) {
+    function gerarFotos(cfg) {
 
-        if (!config || !config.quantidade) return [];
+        if (!cfg || !cfg.quantidade) return [];
 
         const lista = [];
 
-        for (let i = 1; i <= config.quantidade; i++) {
-            const numero = String(i).padStart(2, '0');
-            lista.push(`${config.pasta}${config.prefixo}${numero}.${config.ext}`);
+        for (let i = 1; i <= cfg.quantidade; i++) {
+            const num = String(i).padStart(2, '0');
+            lista.push(`${cfg.pasta}${cfg.prefixo}${num}.${cfg.ext}`);
         }
 
         return lista;
@@ -33,55 +35,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ============================
-    // RENDER DE MÍDIA
+    // RENDER MÍDIA
     // ============================
-    function renderMidia(item, titulo) {
+    function renderMidia(src, titulo) {
 
-        if (!item) return "";
+        if (!src) return "";
 
-        // imagem
-        if (/\.(jpg|jpeg|png|webp)$/i.test(item)) {
-            return `<img src="${item}" alt="${titulo}" loading="lazy">`;
+        // IMAGEM
+        if (/\.(jpg|jpeg|png|webp)$/i.test(src)) {
+            return `<img src="${src}" alt="${titulo}" loading="lazy">`;
         }
 
-        // vídeo local
-        if (/\.(mp4|webm)$/i.test(item)) {
+        // VIDEO LOCAL
+        if (/\.(mp4|webm)$/i.test(src)) {
             return `
                 <video controls>
-                    <source src="${item}" type="video/mp4">
+                    <source src="${src}" type="video/mp4">
                 </video>
             `;
         }
 
-        // iframe (youtube etc)
-        return `<iframe src="${item}" loading="lazy" allowfullscreen></iframe>`;
+        // YOUTUBE / IFRAME
+        return `<iframe src="${src}" loading="lazy" allowfullscreen></iframe>`;
     }
 
 
 
     // ============================
-    // EVENTOS
+    // CARREGAR EVENTOS
     // ============================
     fetch('./eventos.json')
     .then(res => res.json())
     .then(data => {
 
         const container = document.getElementById('eventos-container');
-        if (!container) return;
+
+        if (!container) {
+            console.error("ID eventos-container não encontrado");
+            return;
+        }
 
         if (!data.eventos || !Array.isArray(data.eventos)) {
-            container.innerHTML = "<p>Formato de eventos inválido.</p>";
+            container.innerHTML = "<p>Erro no formato do JSON.</p>";
             return;
         }
 
         if (data.eventos.length === 0) {
-            container.innerHTML = "<p>Nenhum evento cadastrado.</p>";
+            container.innerHTML = "<p>Nenhum evento encontrado.</p>";
             return;
         }
 
+        container.innerHTML = ""; // limpa antes
+
         data.eventos.forEach((ev, index) => {
 
+            // ============================
             // FOTOS
+            // ============================
             let fotos = [];
 
             if (Array.isArray(ev.fotos)) {
@@ -90,45 +100,55 @@ document.addEventListener("DOMContentLoaded", function () {
                 fotos = gerarFotos(ev.fotos);
             }
 
+            // ============================
             // VIDEOS
+            // ============================
             const videos = Array.isArray(ev.videos) ? ev.videos : [];
 
-            // JUNTA TUDO
+            // ============================
+            // MIDIAS
+            // ============================
             const midias = [...fotos, ...videos];
 
-            // RENDER
-            container.innerHTML += `
-                <div class="evento">
+            // ============================
+            // HTML
+            // ============================
+            const bloco = document.createElement("div");
+            bloco.classList.add("evento");
 
-                    <h3 onclick="toggle(this)">
-                        ${ev.titulo || "Evento"} - ${ev.data || ""}
-                    </h3>
+            bloco.innerHTML = `
+                <h3 onclick="toggle(this)">
+                    ${ev.titulo || "Evento"} - ${ev.data || ""}
+                </h3>
 
-                    <div class="conteudo">
-                        <div class="carrossel-wrapper">
+                <div class="conteudo">
+                    <div class="carrossel-wrapper">
 
-                            <button class="seta esquerda"
-                                onclick="scrollGaleria('evento-${index}', -1)">❮</button>
+                        <button class="seta esquerda"
+                            onclick="scrollGaleria('evento-${index}', -1)">❮</button>
 
-                            <div class="carrossel" id="evento-${index}">
-                                ${midias.map(m => renderMidia(m, ev.titulo)).join("")}
-                            </div>
-
-                            <button class="seta direita"
-                                onclick="scrollGaleria('evento-${index}', 1)">❯</button>
-
+                        <div class="carrossel" id="evento-${index}">
+                            ${midias.map(m => renderMidia(m, ev.titulo)).join("")}
                         </div>
-                    </div>
 
+                        <button class="seta direita"
+                            onclick="scrollGaleria('evento-${index}', 1)">❯</button>
+
+                    </div>
                 </div>
             `;
+
+            container.appendChild(bloco);
         });
 
     })
     .catch(err => {
         console.error("Erro ao carregar eventos:", err);
-        document.getElementById('eventos-container').innerHTML =
-            "<p>Erro ao carregar eventos.</p>";
+
+        const container = document.getElementById('eventos-container');
+        if (container) {
+            container.innerHTML = "<p>Erro ao carregar eventos.</p>";
+        }
     });
 
 });
