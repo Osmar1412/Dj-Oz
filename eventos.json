@@ -6,7 +6,7 @@
       "fotos": {
         "pasta": "imagens/",
         "prefixo": "FT-",
-        "quantidade": 10,
+        "quantidade": 9,
         "ext": "jpg"
       },
       "videos": [
