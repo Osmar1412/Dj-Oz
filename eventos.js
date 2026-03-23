@@ -3,15 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // ============================
     // LOGO
     // ============================
-    fetch('./config.json')
+    fetch('config.json')
     .then(res => res.json())
     .then(data => {
         const logo = document.getElementById('logo');
-        if (logo && data.logo) {
-            logo.src = data.logo;
-        }
+        if (logo && data.logo) logo.src = data.logo;
     })
-    .catch(() => console.warn("Erro no config.json"));
+    .catch(() => console.warn("Erro ao carregar logo"));
 
 
 
@@ -19,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // GERAR FOTOS AUTOMÁTICAS
     // ============================
     function gerarFotos(cfg) {
-
         if (!cfg || !cfg.quantidade) return [];
 
         const lista = [];
@@ -35,18 +32,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ============================
-    // RENDER MÍDIA
+    // RENDER MIDIA
     // ============================
     function renderMidia(src, titulo) {
 
         if (!src) return "";
 
-        // IMAGEM
+        // imagem
         if (/\.(jpg|jpeg|png|webp)$/i.test(src)) {
             return `<img src="${src}" alt="${titulo}" loading="lazy">`;
         }
 
-        // VIDEO LOCAL
+        // vídeo local
         if (/\.(mp4|webm)$/i.test(src)) {
             return `
                 <video controls>
@@ -55,25 +52,23 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
         }
 
-        // YOUTUBE / IFRAME
+        // iframe
         return `<iframe src="${src}" loading="lazy" allowfullscreen></iframe>`;
     }
 
 
 
     // ============================
-    // CARREGAR EVENTOS
+    // EVENTOS
     // ============================
-    fetch('./eventos.json')
+    fetch('eventos.json')
     .then(res => res.json())
     .then(data => {
 
-        const container = document.getElementById('eventos-container');
+        console.log("Eventos carregados:", data); // DEBUG
 
-        if (!container) {
-            console.error("ID eventos-container não encontrado");
-            return;
-        }
+        const container = document.getElementById('eventos-container');
+        if (!container) return;
 
         if (!data.eventos || !Array.isArray(data.eventos)) {
             container.innerHTML = "<p>Erro no formato do JSON.</p>";
@@ -85,13 +80,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        container.innerHTML = ""; // limpa antes
+        container.innerHTML = "";
 
         data.eventos.forEach((ev, index) => {
 
-            // ============================
-            // FOTOS
-            // ============================
+            // fotos
             let fotos = [];
 
             if (Array.isArray(ev.fotos)) {
@@ -100,25 +93,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 fotos = gerarFotos(ev.fotos);
             }
 
-            // ============================
-            // VIDEOS
-            // ============================
+            // videos
             const videos = Array.isArray(ev.videos) ? ev.videos : [];
 
-            // ============================
-            // MIDIAS
-            // ============================
             const midias = [...fotos, ...videos];
 
-            // ============================
-            // HTML
-            // ============================
             const bloco = document.createElement("div");
             bloco.classList.add("evento");
 
             bloco.innerHTML = `
                 <h3 onclick="toggle(this)">
-                    ${ev.titulo || "Evento"} - ${ev.data || ""}
+                    ${ev.titulo} - ${ev.data}
                 </h3>
 
                 <div class="conteudo">
@@ -143,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     })
     .catch(err => {
-        console.error("Erro ao carregar eventos:", err);
+        console.error("Erro real:", err);
 
         const container = document.getElementById('eventos-container');
         if (container) {
@@ -156,9 +141,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // ============================
-// TOGGLE
+// TOGGLE GLOBAL
 // ============================
 function toggle(el) {
+    const c = el.nextElementSibling;
+    if (!c) return;
+
+    c.style.display = c.style.display === "block" ? "none" : "block";
+}
+
+function toggleSection(el) {
     const c = el.nextElementSibling;
     if (!c) return;
 
@@ -168,7 +160,7 @@ function toggle(el) {
 
 
 // ============================
-// SCROLL (6 ITENS)
+// SCROLL
 // ============================
 function scrollGaleria(id, dir) {
     const el = document.getElementById(id);
