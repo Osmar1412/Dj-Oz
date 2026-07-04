@@ -3,12 +3,17 @@
     {
       "titulo": "Aniversário da Gisele",
       "data": "14/03/2026",
-      "fotos": {
-        "pasta": "imagens/",
-        "prefixo": "FT-",
-        "quantidade": 9,
-        "ext": "jpg"
-      },
+      "fotos": [
+        "imagens/FT-01.jpg",
+        "imagens/FT-02.jpg",
+        "imagens/FT-03.jpg",
+        "imagens/FT-05.jpg",
+        "imagens/FT-06.jpg",
+        "imagens/FT-07.jpg",
+        "imagens/FT-08.jpg",
+        "imagens/FT-09.jpg",
+        "imagens/FT-10.jpg"
+      ],
       "videos": [
         "videos/VD-02.mp4",
         "videos/VD-06.mp4",

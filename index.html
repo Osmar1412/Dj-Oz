@@ -1,93 +1,152 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DJ Oz | Eventos e Experiências</title>
-
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Oz | Experiência Sonora Premium</title>
+    
+    <link rel="stylesheet" href="style.css?v=1.0.7">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 </head>
 
 <body>
 
-<header class="hero">
-    <img id="logo" class="logo-img">
-    <p id="descricao" class="descricao destaque"></p>
+    <nav class="menu" id="main-nav">
+        <a href="#">Início</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#sets">Sets</a>
+        <a href="#contato">Contato</a>
+        <a href="eventos.html">Eventos</a>
+    </nav>
 
-    <a href="https://wa.me/5511947865370" target="_blank" class="btn destaque-btn">
-        🎧 Contratar Agora
+    <header class="hero">
+        <img id="logo" class="logo-img" alt="DJ Oz Logo">
+        <p id="descricao" class="descricao"></p>
+
+        <div class="hero-actions">
+            <a href="#contato" class="btn">
+                🎧 Contratar Agora
+            </a>
+        </div>
+    </header>
+
+    <section id="sobre" class="reveal-section">
+        <h2>Sobre o Artista</h2>
+        <p class="sobre-texto">
+            DJ profissional especializado em criar experiências únicas e memoráveis. 
+            Com uma curadoria musical impecável e mixagens envolventes, transformo pistas de dança em momentos inesquecíveis.
+            Elevando a energia do seu evento através da música e da tecnologia.
+        </p>
+
+        <div class="mva-container">
+            <div class="mva-card">
+                <div class="mva-icon">🎯</div>
+                <h3>Missão</h3>
+                <p>Elevar a energia de cada evento, criando experiências sonoras memoráveis e personalizadas através da música e da tecnologia.</p>
+            </div>
+            <div class="mva-card">
+                <div class="mva-icon">👁️</div>
+                <h3>Visão</h3>
+                <p>Ser referência de excelência sonora no mercado de eventos, consolidando a marca DJ Oz como sinônimo de inovação e alta performance.</p>
+            </div>
+            <div class="mva-card">
+                <div class="mva-icon">✨</div>
+                <h3>Valores</h3>
+                <p>Profissionalismo, inovação constante, sintonia fina com o público, pontualidade e dedicação total ao sucesso de cada festa.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="sets" class="reveal-section">
+        <h2>🎧 Sets & Mixagens</h2>
+        <div id="sets-container">
+            <!-- Carregado dinamicamente pelo script.js -->
+        </div>
+    </section>
+
+    <section id="contato" class="reveal-section">
+        <h2>Solicitar Orçamento</h2>
+        
+        <div class="contato-container">
+            <div class="contato-info">
+                <h3>Canais de Contato</h3>
+                <p class="contato-sub">Fale diretamente comigo ou envie os detalhes do seu evento ao lado para receber um orçamento personalizado.</p>
+                
+                <div class="info-items">
+                    <a href="mailto:osmar.dj.oz@gmail.com" class="info-item">
+                        <div class="icon-container email-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </div>
+                        <div>
+                            <span>E-mail</span>
+                            <strong>osmar.dj.oz@gmail.com</strong>
+                        </div>
+                    </a>
+                    <a href="https://wa.me/5511947865370" target="_blank" class="info-item">
+                        <div class="icon-container phone-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                        </div>
+                        <div>
+                            <span>Celular / WhatsApp</span>
+                            <strong>(11) 94786-5370</strong>
+                        </div>
+                    </a>
+                    <a href="https://www.youtube.com/@Dj-Oz8" target="_blank" class="info-item">
+                        <div class="icon-container youtube-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        </div>
+                        <div>
+                            <span>YouTube</span>
+                            <strong>@Dj-Oz8</strong>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/osmar.dj.oz" target="_blank" class="info-item">
+                        <div class="icon-container instagram-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </div>
+                        <div>
+                            <span>Instagram</span>
+                            <strong>@osmar.dj.oz</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <form id="formDJ" class="form-dj">
+                <div class="input-group">
+                    <input type="text" name="name" id="name" required>
+                    <label for="name">Nome Completo</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" id="email" required>
+                    <label for="email">E-mail para Contato</label>
+                </div>
+                <div class="input-group">
+                    <input type="tel" name="whatsapp" id="whatsapp" required>
+                    <label for="whatsapp">WhatsApp / Telefone</label>
+                </div>
+                <div class="input-group">
+                    <textarea name="message" id="message" rows="4" required></textarea>
+                    <label for="message">Detalhes do Evento (Data, Local, Tipo)</label>
+                </div>
+                <button type="submit" class="btn-enviar">Enviar Proposta</button>
+            </form>
+        </div>
+        <p id="statusEnvio" style="text-align: center; margin-top: 20px; font-weight: bold;"></p>
+    </section>
+
+    <a href="https://wa.me/5511947865370" target="_blank" class="whatsapp" title="Fale comigo no WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp icon">
     </a>
 
-    <div class="contador-box">
-        <span id="contador">👁️ Carregando...</span>
-    </div>
-</header>
-
-<nav class="menu">
-    <a href="#sobre">Sobre</a>
-    <a href="#sets">Sets</a>
-    <a href="eventos.html">Eventos</a>
-    <a href="#contato">Contato</a>
-</nav>
-
-<section id="sobre">
-    <h2>Sobre</h2>
-    <p class="sobre-texto">
-        DJ profissional especializado em criar experiências únicas e memoráveis. 
-        Mixagens envolventes e leitura de pista precisa tornam qualquer evento inesquecível.
-    </p>
-</section>
-
-<section id="sets">
-    <h2 onclick="toggleSection(this)">🎧 Sets & Mixagens</h2>
-    <div id="sets-container" class="conteudo"></div>
-</section>
-
-<section id="contato">
-    <h2>Solicitar Orçamento</h2>
-    <form id="formDJ" class="form-dj">
-        <div class="input-group">
-            <input type="text" name="name" required>
-            <label>Nome</label>
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="marca">DJ Oz Eventos</p>
+            <p class="copy">© 2026 Todos os direitos reservados. Design by AI.<span id="admin-link-wrapper" style="display: none;"> | <a href="admin.html" style="color: var(--text-dim); text-decoration: none; transition: var(--transition-smooth);" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-dim)'">Painel Admin</a></span></p>
         </div>
-        <div class="input-group">
-            <input type="email" name="email" required>
-            <label>Email</label>
-        </div>
-        <div class="input-group">
-            <input type="tel" name="whatsapp" required>
-            <label>WhatsApp</label>
-        </div>
-        <div class="input-group">
-            <textarea name="message" required></textarea>
-            <label>Detalhes do evento</label>
-        </div>
-        <button type="submit" class="btn-enviar">Enviar Pedido</button>
-    </form>
-    <p id="statusEnvio"></p>
-</section>
+    </footer>
 
-<a href="https://wa.me/5511947865370" target="_blank" class="whatsapp">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-</a>
-
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-            <p>(11) 94786-5370</p>
-        </div>
-        <div class="footer-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png">
-            <p>osmar.dj.oz@gmail.com</p>
-        </div>
-        <p class="marca">🎧 DJ Oz Eventos</p>
-        <p class="copy">© 2026 Todos os direitos reservados</p>
-    </div>
-</footer>
-
-<script src="script.js"></script>
+    <script src="script.js?v=1.0.4"></script>
 </body>
 </html>

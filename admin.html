@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Oz | Painel de Controle Administrativo</title>
+    <link rel="stylesheet" href="style.css?v=1.0.6">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(0, 247, 255, 0.2);
+            padding-bottom: 20px;
+        }
+        .dashboard-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.4);
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 32px;
+        }
+        .admin-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .admin-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+        .admin-instructions {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .admin-instructions h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+        }
+        .admin-instructions ol {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+        .admin-instructions code {
+            background: rgba(0, 247, 255, 0.1);
+            color: var(--primary-color);
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .admin-input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .admin-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: static !important;
+            transform: none !important;
+        }
+        .admin-input-group input, .admin-input-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: var(--transition-smooth);
+            box-sizing: border-box;
+        }
+        .admin-input-group input:focus, .admin-input-group textarea:focus {
+            border-color: var(--primary-color);
+            background: rgba(0, 247, 255, 0.02);
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.15);
+        }
+        .btn-salvar {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 15px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 15px rgba(0, 247, 255, 0.2);
+            margin-top: 10px;
+        }
+        .btn-salvar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 247, 255, 0.4);
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+        }
+        .status-msg {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            min-height: 20px;
+        }
+        .lista-itens {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .lista-itens h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .item-info strong {
+            display: block;
+            color: var(--text-color);
+        }
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-excluir {
+            background: none;
+            border: none;
+            color: #ff4444;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+            transition: var(--transition-smooth);
+        }
+        .btn-excluir:hover {
+            color: #ff0000;
+            transform: scale(1.2);
+        }
+        /* ESTILO DO BOTÃO DE EDITAR MÍDIAS */
+        .btn-editar {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+            transition: var(--transition-smooth);
+        }
+        .btn-editar:hover {
+            color: var(--secondary-color);
+            transform: scale(1.2);
+        }
+
+        /* MODAIS PERSONALIZADOS */
+        .admin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .admin-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: #111116;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        .admin-modal.show .modal-content {
+            transform: translateY(0);
+        }
+        .modal-content.large {
+            max-width: 750px;
+            max-height: 85vh;
+            overflow-y: auto;
+            text-align: left;
+        }
+        .modal-content h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .modal-content p {
+            color: var(--text-color);
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .btn-confirmar {
+            padding: 10px 25px;
+            background: #ff4444;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .btn-confirmar:hover {
+            background: #ff1111;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.4);
+        }
+        .btn-cancelar {
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-color);
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .btn-cancelar:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .close-modal:hover {
+            color: var(--primary-color);
+        }
+
+        /* MINI GALERIA DE EDIÇÃO */
+        .media-sections {
+            margin-top: 10px;
+        }
+        .media-section h3 {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .edit-media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .edit-photo-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #08080a;
+        }
+        .edit-photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .delete-media-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 68, 68, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition-smooth);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .delete-media-badge:hover {
+            background: #ff0000;
+            transform: scale(1.1);
+        }
+        .edit-media-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .edit-video-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        .edit-video-item span {
+            font-size: 13px;
+            color: var(--text-color);
+            word-break: break-all;
+            padding-right: 10px;
+        }
+        .item-info span {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+        .item-badge {
+            font-size: 11px;
+            color: var(--primary-color);
+            background: rgba(0, 247, 255, 0.1);
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 247, 255, 0.15);
+        }
+        .btn-voltar-admin {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            transition: var(--transition-smooth);
+        }
+        .btn-voltar-admin:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <a href="index.html" class="btn-voltar-admin">⬅ Voltar ao Site</a>
+
+        <div class="dashboard-header">
+            <h1>Painel de Controle do DJ Oz</h1>
+        </div>
+
+        <div class="admin-dashboard">
+            
+            <!-- GERENCIAR EVENTOS -->
+            <div class="admin-card">
+                <div>
+                    <h2 class="section-title">✨ Gerenciar Eventos</h2>
+                    <div class="admin-instructions">
+                        <h4>Como adicionar eventos:</h4>
+                        <ol>
+                            <li>Copie as novas fotos para a pasta <code>imagens/</code>.</li>
+                            <li>Copie os novos vídeos para a pasta <code>videos/</code>.</li>
+                            <li>Preencha o formulário e clique em cadastrar.</li>
+                        </ol>
+                    </div>
+
+                    <form id="eventForm" class="admin-form">
+                        <div class="admin-input-group">
+                            <label for="eventTitulo">Título do Evento</label>
+                            <input type="text" id="eventTitulo" placeholder="Ex: Aniversário da Gisele" required>
+                        </div>
+                        <div class="admin-input-group">
+                            <label for="eventData">Data do Evento</label>
+                            <input type="text" id="eventData" placeholder="Ex: 14/03/2026" required>
+                        </div>
+                        <div class="admin-input-group">
+                            <label for="eventFotos">Fotos (separadas por vírgula)</label>
+                            <textarea id="eventFotos" rows="3" placeholder="Ex: FT-11.jpg, FT-12.jpg"></textarea>
+                        </div>
+                        <div class="admin-input-group">
+                            <label for="eventVideos">Vídeos (separados por vírgula)</label>
+                            <textarea id="eventVideos" rows="2" placeholder="Ex: VD-02.mp4, VD-06.mp4"></textarea>
+                        </div>
+                        <button type="submit" class="btn-salvar">Cadastrar Evento</button>
+                    </form>
+                    <div id="eventStatus" class="status-msg"></div>
+                </div>
+
+                <div class="lista-itens">
+                    <h3>Eventos Cadastrados</h3>
+                    <div id="eventListContainer">
+                        <!-- Carregado via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- GERENCIAR SETS -->
+            <div class="admin-card">
+                <div>
+                    <h2 class="section-title">🎧 Gerenciar Sets & Mixagens</h2>
+                    <div class="admin-instructions">
+                        <h4>Como adicionar novos sets:</h4>
+                        <ol>
+                            <li>Copie o novo arquivo <code>.mp3</code> para a pasta <code>audios/</code>.</li>
+                            <li>Digite o nome exato do arquivo no formulário abaixo.</li>
+                            <li>Clique em cadastrar para publicar o tocador de CDJ.</li>
+                        </ol>
+                    </div>
+
+                    <form id="setForm" class="admin-form">
+                        <div class="admin-input-group">
+                            <label for="setTitulo">Título do Set</label>
+                            <input type="text" id="setTitulo" placeholder="Ex: Set 04 - Retrô" required>
+                        </div>
+                        <div class="admin-input-group">
+                            <label for="setData">Data do Lançamento</label>
+                            <input type="text" id="setData" placeholder="Ex: 22/07/2026" required>
+                        </div>
+                        <div class="admin-input-group">
+                            <label for="setAudio">Nome do Arquivo de Áudio (MP3)</label>
+                            <input type="text" id="setAudio" placeholder="Ex: set4.mp3 ou nome-da-musica.mp3" required>
+                        </div>
+                        <button type="submit" class="btn-salvar">Cadastrar Set</button>
+                    </form>
+                    <div id="setStatus" class="status-msg"></div>
+                </div>
+
+                <div class="lista-itens">
+                    <h3>Sets Cadastrados (CDJ)</h3>
+                    <div id="setListContainer">
+                        <!-- Carregado via JS -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMAÇÃO DE EXCLUSÃO -->
+    <div id="confirmModal" class="admin-modal">
+        <div class="modal-content">
+            <h3 id="confirmTitle">Confirmar Exclusão</h3>
+            <p id="confirmMessage">Deseja realmente prosseguir?</p>
+            <div class="modal-buttons">
+                <button id="btnConfirmYes" class="btn-confirmar">Sim, Excluir</button>
+                <button id="btnConfirmNo" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE EDIÇÃO DE MÍDIAS DO EVENTO -->
+    <div id="editEventModal" class="admin-modal">
+        <div class="modal-content large">
+            <span class="close-modal" onclick="fecharEditModal()">&times;</span>
+            <h3 id="editEventTitle">Gerenciar Mídias</h3>
+            <p id="editEventDate" style="color: var(--text-dim); margin-top: -10px; margin-bottom: 20px;"></p>
+            
+            <div class="media-sections">
+                <div class="media-section">
+                    <h3>Fotos</h3>
+                    <div id="editPhotosGrid" class="edit-media-grid"></div>
+                </div>
+                
+                <div class="media-section" style="margin-top: 25px;">
+                    <h3>Vídeos</h3>
+                    <div id="editVideosGrid" class="edit-media-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const eventForm = document.getElementById('eventForm');
+            const setForm = document.getElementById('setForm');
+            
+            const eventStatus = document.getElementById('eventStatus');
+            const setStatus = document.getElementById('setStatus');
+            
+            const eventListContainer = document.getElementById('eventListContainer');
+            const setListContainer = document.getElementById('setListContainer');
+
+            // --- CARREGAR EVENTOS ---
+            function carregarEventos() {
+                fetch('eventos.json?v=' + Date.now())
+                .then(res => res.json())
+                .then(data => {
+                    eventListContainer.innerHTML = '';
+                    if (data.eventos && data.eventos.length > 0) {
+                        data.eventos.forEach((ev, eventIdx) => {
+                            const item = document.createElement('div');
+                            item.classList.add('item-row');
+                            
+                            const totalFotos = Array.isArray(ev.fotos) ? ev.fotos.length : 0;
+                            const totalVideos = Array.isArray(ev.videos) ? ev.videos.length : 0;
+
+                            item.innerHTML = `
+                                <div class="item-info">
+                                    <strong>${ev.titulo}</strong>
+                                    <span>${ev.data}</span>
+                                </div>
+                                <div class="item-actions">
+                                    <div class="item-badge">
+                                        📸 ${totalFotos} | 🎥 ${totalVideos}
+                                    </div>
+                                    <button class="btn-editar" onclick="gerenciarMidias(${eventIdx})" title="Gerenciar Fotos/Vídeos">✏️</button>
+                                    <button class="btn-excluir" onclick="excluirEvento(${eventIdx})" title="Excluir Evento Inteiro">🗑️</button>
+                                </div>
+                            `;
+                            eventListContainer.appendChild(item);
+                        });
+                    } else {
+                        eventListContainer.innerHTML = '<p style="color: var(--text-dim);">Nenhum evento cadastrado.</p>';
+                    }
+                })
+                .catch(err => {
+                    eventListContainer.innerHTML = '<p style="color: #ff4444;">Erro ao carregar lista de eventos.</p>';
+                });
+            }
+
+            // --- CARREGAR SETS ---
+            function carregarSets() {
+                fetch('sets.json?v=' + Date.now())
+                .then(res => res.json())
+                .then(data => {
+                    setListContainer.innerHTML = '';
+                    if (data.sets && data.sets.length > 0) {
+                        data.sets.forEach((s, setIdx) => {
+                            const item = document.createElement('div');
+                            item.classList.add('item-row');
+                            
+                            item.innerHTML = `
+                                <div class="item-info">
+                                    <strong>${s.titulo}</strong>
+                                    <span>${s.data}</span>
+                                </div>
+                                <div class="item-actions">
+                                    <div class="item-badge" style="color: #00ff88; background: rgba(0, 255, 136, 0.1); border-color: rgba(0, 255, 136, 0.15);">
+                                        🎵 MP3
+                                    </div>
+                                    <button class="btn-excluir" onclick="excluirSet(${setIdx})" title="Excluir Set">🗑️</button>
+                                </div>
+                            `;
+                            setListContainer.appendChild(item);
+                        });
+                    } else {
+                        setListContainer.innerHTML = '<p style="color: var(--text-dim);">Nenhum set cadastrado.</p>';
+                    }
+                })
+                .catch(err => {
+                    setListContainer.innerHTML = '<p style="color: #ff4444;">Erro ao carregar lista de sets.</p>';
+                });
+            }
+
+            carregarEventos();
+            carregarSets();
+
+            // --- CADASTRAR EVENTO ---
+            eventForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                eventStatus.innerText = '💾 Salvando evento...';
+                eventStatus.style.color = 'var(--primary-color)';
+
+                const payload = {
+                    titulo: document.getElementById('eventTitulo').value,
+                    data: document.getElementById('eventData').value,
+                    fotos: document.getElementById('eventFotos').value,
+                    videos: document.getElementById('eventVideos').value
+                };
+
+                fetch('/api/adicionar-evento', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        eventStatus.innerText = '✅ Evento cadastrado com sucesso!';
+                        eventStatus.style.color = '#00ff88';
+                        eventForm.reset();
+                        carregarEventos();
+                    } else {
+                        eventStatus.innerText = '❌ Erro: ' + (data.error || 'Erro desconhecido');
+                        eventStatus.style.color = '#ff4444';
+                    }
+                })
+                .catch(err => {
+                    eventStatus.innerText = '❌ Erro de conexão com o servidor.';
+                    eventStatus.style.color = '#ff4444';
+                });
+            });
+
+            // --- CADASTRAR SET ---
+            setForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                setStatus.innerText = '💾 Salvando set...';
+                setStatus.style.color = 'var(--primary-color)';
+
+                const payload = {
+                    titulo: document.getElementById('setTitulo').value,
+                    data: document.getElementById('setData').value,
+                    audio: document.getElementById('setAudio').value
+                };
+
+                fetch('/api/adicionar-set', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        setStatus.innerText = '✅ Set cadastrado com sucesso!';
+                        setStatus.style.color = '#00ff88';
+                        setForm.reset();
+                        carregarSets();
+                    } else {
+                        setStatus.innerText = '❌ Erro: ' + (data.error || 'Erro desconhecido');
+                        setStatus.style.color = '#ff4444';
+                    }
+                })
+                .catch(err => {
+                    setStatus.innerText = '❌ Erro de conexão com o servidor.';
+                    setStatus.style.color = '#ff4444';
+                });
+            });
+
+            // --- MODAL DE CONFIRMAÇÃO PERSONALIZADO ---
+            const confirmModal = document.getElementById('confirmModal');
+            const confirmMessage = document.getElementById('confirmMessage');
+            const btnConfirmYes = document.getElementById('btnConfirmYes');
+            const btnConfirmNo = document.getElementById('btnConfirmNo');
+            let onConfirmCallback = null;
+
+            window.confirmarAcao = function(msg, callback) {
+                confirmMessage.innerText = msg;
+                confirmModal.classList.add('show');
+                onConfirmCallback = callback;
+            };
+
+            window.fecharConfirmacao = function() {
+                confirmModal.classList.remove('show');
+                onConfirmCallback = null;
+            };
+
+            btnConfirmYes.addEventListener('click', () => {
+                if (onConfirmCallback) onConfirmCallback();
+                fecharConfirmacao();
+            });
+
+            btnConfirmNo.addEventListener('click', fecharConfirmacao);
+
+            // --- FECHAR EDIT MODAL ---
+            const editEventModal = document.getElementById('editEventModal');
+            window.fecharEditModal = function() {
+                editEventModal.classList.remove('show');
+            };
+
+            // --- GERENCIAR MÍDIAS DO EVENTO ---
+            window.gerenciarMidias = function(eventIdx) {
+                fetch('eventos.json?v=' + Date.now())
+                .then(res => res.json())
+                .then(data => {
+                    const ev = data.eventos[eventIdx];
+                    if (!ev) return;
+
+                    document.getElementById('editEventTitle').innerText = `Gerenciar Mídias: ${ev.titulo}`;
+                    document.getElementById('editEventDate').innerText = `Data: ${ev.data}`;
+
+                    const photosGrid = document.getElementById('editPhotosGrid');
+                    const videosGrid = document.getElementById('editVideosGrid');
+
+                    // Renderiza Fotos
+                    photosGrid.innerHTML = '';
+                    if (Array.isArray(ev.fotos) && ev.fotos.length > 0) {
+                        ev.fotos.forEach((foto, fotoIdx) => {
+                            const card = document.createElement('div');
+                            card.classList.add('edit-photo-card');
+                            card.innerHTML = `
+                                <img src="${foto}" alt="Foto ${fotoIdx + 1}">
+                                <button class="delete-media-badge" onclick="excluirMidia(${eventIdx}, 'fotos', ${fotoIdx})" title="Excluir Foto">✕</button>
+                            `;
+                            photosGrid.appendChild(card);
+                        });
+                    } else {
+                        photosGrid.innerHTML = '<p style="color: var(--text-dim); font-size: 13px;">Nenhuma foto neste evento.</p>';
+                    }
+
+                    // Renderiza Vídeos
+                    videosGrid.innerHTML = '';
+                    if (Array.isArray(ev.videos) && ev.videos.length > 0) {
+                        ev.videos.forEach((video, videoIdx) => {
+                            const nameOnly = video.split('/').pop();
+                            const item = document.createElement('div');
+                            item.classList.add('edit-video-item');
+                            item.innerHTML = `
+                                <span>🎥 ${nameOnly}</span>
+                                <button class="btn-excluir" onclick="excluirMidia(${eventIdx}, 'videos', ${videoIdx})" title="Excluir Vídeo" style="margin-left: 0;">🗑️</button>
+                            `;
+                            videosGrid.appendChild(item);
+                        });
+                    } else {
+                        videosGrid.innerHTML = '<p style="color: var(--text-dim); font-size: 13px;">Nenhum vídeo neste evento.</p>';
+                    }
+
+                    // Abre o modal
+                    editEventModal.classList.add('show');
+                })
+                .catch(err => {
+                    alert('Erro ao carregar detalhes do evento.');
+                });
+            };
+
+            // --- EXCLUIR MÍDIA ESPECÍFICA ---
+            window.excluirMidia = function(eventIndex, mediaType, mediaIndex) {
+                const tipo = mediaType === 'fotos' ? 'esta foto' : 'este vídeo';
+                confirmarAcao(`Deseja realmente excluir ${tipo} do evento?`, () => {
+                    fetch('/api/excluir-midia-evento', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ eventIndex, mediaType, mediaIndex })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Recarrega o modal de mídias e a lista principal de eventos
+                            gerenciarMidias(eventIndex);
+                            carregarEventos();
+                        } else {
+                            alert('Erro ao excluir mídia: ' + data.error);
+                        }
+                    })
+                    .catch(err => {
+                        alert('Erro de conexão com o servidor.');
+                    });
+                });
+            };
+
+            // --- EXCLUIR EVENTO ---
+            window.excluirEvento = function(index) {
+                confirmarAcao('Deseja realmente excluir este evento inteiro?', () => {
+                    fetch('/api/excluir-evento', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ index })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            carregarEventos();
+                        } else {
+                            alert('Erro ao excluir: ' + data.error);
+                        }
+                    })
+                    .catch(err => {
+                        alert('Erro de conexão com o servidor.');
+                    });
+                });
+            };
+
+            // --- EXCLUIR SET ---
+            window.excluirSet = function(index) {
+                confirmarAcao('Deseja realmente excluir este set?', () => {
+                    fetch('/api/excluir-set', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ index })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            carregarSets();
+                        } else {
+                            alert('Erro ao excluir: ' + data.error);
+                        }
+                    })
+                    .catch(err => {
+                        alert('Erro de conexão com o servidor.');
+                    });
+                });
+            };
+
+        });
+    </script>
+</body>
+</html>

@@ -1,176 +1,139 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ============================
-    // LOGO
-    // ============================
+    // --- CARREGAR LOGO ---
     fetch('config.json')
     .then(res => res.json())
     .then(data => {
         const logo = document.getElementById('logo');
         if (logo && data.logo) logo.src = data.logo;
     })
-    .catch(() => console.warn("Erro ao carregar logo"));
+    .catch(err => console.error("Erro ao carregar logo:", err));
 
-
-
-    // ============================
-    // GERAR FOTOS AUTOMÁTICAS
-    // ============================
+    // --- GERADOR DE FOTOS ---
     function gerarFotos(cfg) {
         if (!cfg || !cfg.quantidade) return [];
-
         const lista = [];
-
         for (let i = 1; i <= cfg.quantidade; i++) {
             const num = String(i).padStart(2, '0');
             lista.push(`${cfg.pasta}${cfg.prefixo}${num}.${cfg.ext}`);
         }
-
         return lista;
     }
 
-
-
-    // ============================
-    // RENDER MIDIA
-    // ============================
-    function renderMidia(src, titulo) {
-
-        if (!src) return "";
-
-        // imagem
-        if (/\.(jpg|jpeg|png|webp)$/i.test(src)) {
-            return `<img src="${src}" alt="${titulo}" loading="lazy">`;
+    // --- OBTER TODAS AS MÍDIAS DO EVENTO ---
+    window.getEventMedia = function(event) {
+        let fotos = [];
+        if (Array.isArray(event.fotos)) {
+            fotos = event.fotos;
+        } else if (typeof event.fotos === 'object') {
+            fotos = gerarFotos(event.fotos);
         }
+        const videos = Array.isArray(event.videos) ? event.videos : [];
+        return [...fotos, ...videos];
+    };
 
-        // vídeo local
-        if (/\.(mp4|webm)$/i.test(src)) {
-            return `
-                <video controls>
-                    <source src="${src}" type="video/mp4">
-                </video>
-            `;
-        }
-
-        // iframe
-        return `<iframe src="${src}" loading="lazy" allowfullscreen></iframe>`;
-    }
-
-
-
-    // ============================
-    // EVENTOS
-    // ============================
-    fetch('eventos.json')
+    // --- CARREGAR EVENTOS ---
+    fetch('eventos.json?v=1.0.1')
     .then(res => res.json())
     .then(data => {
-
-        console.log("Eventos carregados:", data); // DEBUG
-
         const container = document.getElementById('eventos-container');
-        if (!container) return;
+        if (!container || !data.eventos) return;
 
-        if (!data.eventos || !Array.isArray(data.eventos)) {
-            container.innerHTML = "<p>Erro no formato do JSON.</p>";
-            return;
-        }
-
-        if (data.eventos.length === 0) {
-            container.innerHTML = "<p>Nenhum evento encontrado.</p>";
-            return;
-        }
-
+        window.eventsData = data.eventos; // Salva globalmente para o Lightbox
         container.innerHTML = "";
 
-        data.eventos.forEach((ev, index) => {
-
-            // fotos
-            let fotos = [];
-
-            if (Array.isArray(ev.fotos)) {
-                fotos = ev.fotos;
-            } else if (typeof ev.fotos === "object") {
-                fotos = gerarFotos(ev.fotos);
-            }
-
-            // videos
-            const videos = Array.isArray(ev.videos) ? ev.videos : [];
-
-            const midias = [...fotos, ...videos];
+        data.eventos.forEach((ev, eventIdx) => {
+            const midias = getEventMedia(ev);
 
             const bloco = document.createElement("div");
             bloco.classList.add("evento");
-
             bloco.innerHTML = `
-                <h3 onclick="toggle(this)">
-                    ${ev.titulo} - ${ev.data}
-                </h3>
-
-                <div class="conteudo">
-                    <div class="carrossel-wrapper">
-
-                        <button class="seta esquerda"
-                            onclick="scrollGaleria('evento-${index}', -1)">❮</button>
-
-                        <div class="carrossel" id="evento-${index}">
-                            ${midias.map(m => renderMidia(m, ev.titulo)).join("")}
-                        </div>
-
-                        <button class="seta direita"
-                            onclick="scrollGaleria('evento-${index}', 1)">❯</button>
-
-                    </div>
+                <div class="evento-header">
+                    <h3>${ev.titulo}</h3>
+                    <span>${ev.data}</span>
+                </div>
+                <div class="eventos-grid">
+                    ${midias.map((m, mediaIdx) => {
+                        const isVideo = /\.(mp4|webm)$/i.test(m);
+                        return `
+                            <div class="midia-card" onclick="openLightbox(${eventIdx}, ${mediaIdx})">
+                                ${isVideo ? `
+                                    <video src="${m}" muted loop></video>
+                                    <div class="video-overlay-icon">▶</div>
+                                ` : `
+                                    <img src="${m}" alt="${ev.titulo}" loading="lazy">
+                                `}
+                            </div>
+                        `;
+                    }).join("")}
                 </div>
             `;
-
             container.appendChild(bloco);
         });
-
     })
-    .catch(err => {
-        console.error("Erro real:", err);
+    .catch(err => console.error("Erro ao carregar eventos:", err));
 
-        const container = document.getElementById('eventos-container');
-        if (container) {
-            container.innerHTML = "<p>Erro ao carregar eventos.</p>";
+    // --- CONTROLES DE LIGHTBOX ---
+    let currentEventIndex = 0;
+    let currentMediaIndex = 0;
+
+    window.openLightbox = function(eventIdx, mediaIdx) {
+        currentEventIndex = eventIdx;
+        currentMediaIndex = mediaIdx;
+        updateLightbox();
+        
+        const lightbox = document.getElementById('lightbox-modal');
+        if (lightbox) {
+            lightbox.style.display = 'flex';
+            setTimeout(() => lightbox.classList.add('active'), 10);
+        }
+    };
+
+    window.closeLightbox = function() {
+        const lightbox = document.getElementById('lightbox-modal');
+        if (lightbox) {
+            lightbox.classList.remove('active');
+            const video = lightbox.querySelector('video');
+            if (video) video.pause();
+            setTimeout(() => lightbox.style.display = 'none', 300);
+        }
+    };
+
+    window.changeLightboxMedia = function(dir) {
+        if (!window.eventsData) return;
+        const event = window.eventsData[currentEventIndex];
+        const midias = getEventMedia(event);
+        
+        currentMediaIndex += dir;
+        if (currentMediaIndex < 0) currentMediaIndex = midias.length - 1;
+        if (currentMediaIndex >= midias.length) currentMediaIndex = 0;
+        
+        updateLightbox();
+    };
+
+    function updateLightbox() {
+        const container = document.getElementById('lightbox-media-container');
+        if (!container || !window.eventsData) return;
+
+        const event = window.eventsData[currentEventIndex];
+        const midias = getEventMedia(event);
+        const mediaSrc = midias[currentMediaIndex];
+        
+        const isVideo = /\.(mp4|webm)$/i.test(mediaSrc);
+        if (isVideo) {
+            container.innerHTML = `<video src="${mediaSrc}" controls autoplay></video>`;
+        } else {
+            container.innerHTML = `<img src="${mediaSrc}" alt="Galeria ampliada">`;
+        }
+    }
+
+    // Suporte a teclado no Lightbox (Esc, Setas)
+    document.addEventListener('keydown', function(e) {
+        const lightbox = document.getElementById('lightbox-modal');
+        if (lightbox && lightbox.classList.contains('active')) {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') changeLightboxMedia(-1);
+            if (e.key === 'ArrowRight') changeLightboxMedia(1);
         }
     });
-
 });
-
-
-
-// ============================
-// TOGGLE GLOBAL
-// ============================
-function toggle(el) {
-    const c = el.nextElementSibling;
-    if (!c) return;
-
-    c.style.display = c.style.display === "block" ? "none" : "block";
-}
-
-function toggleSection(el) {
-    const c = el.nextElementSibling;
-    if (!c) return;
-
-    c.style.display = c.style.display === "block" ? "none" : "block";
-}
-
-
-
-// ============================
-// SCROLL
-// ============================
-function scrollGaleria(id, dir) {
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    const item = el.children[0];
-    const largura = item ? item.offsetWidth + 15 : 250;
-
-    el.scrollBy({
-        left: dir * largura * 6,
-        behavior: "smooth"
-    });
-}

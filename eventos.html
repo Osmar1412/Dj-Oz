@@ -1,34 +1,284 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DJ Oz | Eventos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Oz | Galeria de Eventos</title>
+    
+    <link rel="stylesheet" href="style.css?v=1.0.7">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-eventos {
+            height: 40vh;
+            min-height: 300px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero-eventos .logo-img {
+            max-width: 320px;
+            margin-left: 0;
+        }
+        .btn-voltar {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+        }
+        
+        #eventos-page {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        .evento {
+            margin-bottom: 70px;
+            padding: 40px;
+            background: var(--glass-bg);
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .evento-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 247, 255, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .evento-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            text-shadow: 0 0 5px rgba(0, 247, 255, 0.3);
+        }
+
+        .evento-header span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--text-color);
+            background: rgba(0, 247, 255, 0.1);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.15);
+        }
+
+        /* GRID DE MÍDIA - 3 COLUNAS */
+        .eventos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .midia-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: #09090d;
+            height: 250px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: var(--transition-smooth);
+        }
+
+        .midia-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(0, 247, 255, 0.3);
+        }
+
+        .midia-card img, .midia-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .midia-card:hover img {
+            filter: brightness(1.1);
+        }
+
+        /* Vídeo Overlay Play Icon */
+        .video-overlay-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 247, 255, 0.85);
+            color: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+            pointer-events: none;
+            transition: var(--transition-smooth);
+        }
+
+        .midia-card:hover .video-overlay-icon {
+            background: var(--primary-color);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* LIGHTBOX MODAL (VISUALIZADOR TELA CHEIA) */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 8, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 80%;
+            max-height: 80%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-content img, .lightbox-content video {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 40px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            line-height: 1;
+        }
+
+        .lightbox-close:hover {
+            color: var(--primary-color);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            user-select: none;
+        }
+
+        .lightbox-nav:hover {
+            background: var(--primary-color);
+            color: black;
+            border-color: var(--primary-color);
+            box-shadow: var(--glow-shadow);
+        }
+
+        .lightbox-prev { left: -75px; }
+        .lightbox-next { right: -75px; }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 1024px) {
+            .eventos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .lightbox-prev { left: -20px; }
+            .lightbox-next { right: -20px; }
+            .lightbox-content { max-width: 90%; }
+        }
+
+        @media (max-width: 768px) {
+            .eventos-grid {
+                grid-template-columns: 1fr;
+            }
+            .evento-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .evento {
+                padding: 25px;
+            }
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header class="hero hero-eventos">
-    <img id="logo" class="logo-img">
-</header>
+    <header class="hero hero-eventos">
+        <img id="logo" class="logo-img" alt="DJ Oz Logo">
+        <h2>Galeria de Eventos</h2>
+    </header>
 
-<section id="eventos-page">
-    <h2 id="titulo-eventos" onclick="toggleSection(this)">Eventos 📸</h2>
+    <section id="eventos-page" class="reveal">
+        <div id="eventos-container">
+            <!-- Carregado dinamicamente pelo eventos.js -->
+        </div>
+    </section>
 
-    <!-- IMPORTANTE: começa visível -->
-    <div id="eventos-container" class="conteudo" style="display:block;"></div>
-</section>
+    <a href="index.html" class="btn btn-voltar">⬅ Voltar</a>
 
-<a href="index.html" class="btn-voltar">⬅ Voltar para Home</a>
+    <a href="https://wa.me/5511947865370" target="_blank" class="whatsapp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
 
-<a href="https://wa.me/5511947865370" target="_blank" class="whatsapp">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-</a>
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox" onclick="if(event.target === this) closeLightbox()">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <button class="lightbox-nav lightbox-prev" onclick="changeLightboxMedia(-1)">❮</button>
+            <div id="lightbox-media-container"></div>
+            <button class="lightbox-nav lightbox-next" onclick="changeLightboxMedia(1)">❯</button>
+        </div>
+    </div>
 
-<script src="eventos.js"></script>
-
+    <script src="eventos.js?v=1.0.3"></script>
 </body>
 </html>
