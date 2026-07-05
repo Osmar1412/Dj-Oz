@@ -21,6 +21,20 @@ document.addEventListener("DOMContentLoaded", function () {
         adminWrapper.style.display = 'inline';
     }
 
+    // --- DIRECIONAMENTO DO BOTÃO CONTRATAR AGORA (Bypass de Cache) ---
+    const contratarBtn = document.getElementById('contratar-btn');
+    if (contratarBtn) {
+        contratarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const contatoSec = document.getElementById('contato');
+            if (contatoSec) {
+                const yOffset = -90; // Compensa a altura do menu sticky
+                const y = contatoSec.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+        });
+    }
+
     // --- ANIMAÇÃO DE REVELAÇÃO (INTERSECTION OBSERVER) ---
     const observerOptions = {
         threshold: 0.1
