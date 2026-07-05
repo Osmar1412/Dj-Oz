@@ -76,6 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
             status.innerText = "📨 Enviando sua proposta...";
             status.style.color = "var(--primary-color)";
             
+            if (typeof emailjs === 'undefined') {
+                status.innerText = "❌ Envio indisponível por restrições do navegador (EmailJS bloqueado). Por favor, use o botão do WhatsApp à direita para entrar em contato!";
+                status.style.color = "#ff4444";
+                return;
+            }
+            
             emailjs.sendForm("service_5fpydfh", "template_esjbqjl", form)
             .then(() => emailjs.sendForm("service_5fpydfh", "template_2qmhd1v", form))
             .then(() => { 
