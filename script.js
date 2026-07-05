@@ -1,5 +1,9 @@
 (function(){
-    emailjs.init("vY9bUzhQP96Kiag5h");
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init("vY9bUzhQP96Kiag5h");
+    } else {
+        console.warn("EmailJS não carregado ou bloqueado.");
+    }
 })();
 
 document.addEventListener("DOMContentLoaded", function () {

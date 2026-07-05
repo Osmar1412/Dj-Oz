@@ -25,7 +25,7 @@
         <p id="descricao" class="descricao"></p>
 
         <div class="hero-actions">
-            <a href="#contato" id="contratar-btn" class="btn">
+            <a href="#contato" id="contratar-btn" class="btn" onclick="const target = document.getElementById('contato'); if (target) { window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' }); } return false;">
                 🎧 Contratar Agora
             </a>
         </div>
